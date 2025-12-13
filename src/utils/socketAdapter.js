@@ -1,25 +1,31 @@
 import { io } from "socket.io-client";
 
-// Native Socket.IO implementation for Azure App Service
-export const getSocket = async () => {
-    // API URL from env or fallback to Azure App Service
-    const socketUrl = import.meta.env.VITE_API_BASE_URL || "https://zovo-backend.azurewebsites.net";
+/**
+ * Socket.IO adapter for Azure App Service backend
+ * Env var MUST be defined at build time
+ */
+export const getSocket = () => {
+  const socketUrl = import.meta.env.VITE_SOCKET_URL;
 
-    console.log("🔌 Connecting to Socket.IO at:", socketUrl);
+  if (!socketUrl) {
+    throw new Error("❌ VITE_SOCKET_URL is not defined");
+  }
 
-    const socket = io(socketUrl, {
-        transports: ["websocket"], // Enforce websocket only for best performance
-        withCredentials: true,
-        reconnection: true,
-    });
+  console.log("🔌 Connecting to Socket.IO at:", socketUrl);
 
-    socket.on("connect", () => {
-        console.log("✅ Socket connected:", socket.id);
-    });
+  const socket = io(socketUrl, {
+    transports: ["websocket"],
+    withCredentials: true,
+    reconnection: true,
+  });
 
-    socket.on("connect_error", (err) => {
-        console.warn("⚠️ Socket connection error:", err.message);
-    });
+  socket.on("connect", () => {
+    console.log("✅ Socket connected:", socket.id);
+  });
 
-    return socket;
+  socket.on("connect_error", (err) => {
+    console.error("❌ Socket connection error:", err.message);
+  });
+
+  return socket;
 };
