@@ -1,0 +1,321 @@
+/* frontend/src/index.css */
+
+/* ============================================
+   TAILWIND IMPORTS - MUST BE FIRST
+   ============================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   BASE LAYER - VARIABLES & RESETS
+   ============================================ */
+@layer base {
+  :root {
+    --accent-primary: #007AFF;
+    /* Electric Blue */
+    --bg-sidebar: #FFFFFF;
+    /* Pure Canvas White */
+    --bg-main: #1A1A1A;
+    /* Deep Charcoal Gray */
+    --bg-card: #2d2d2d;
+    /* Slightly lighter dark for cards (~#333) */
+    --text-sidebar: #1D1D1F;
+    /* Pure Dark for Sidebar */
+    --text-main: #E0E0E0;
+    /* Light Gray for Main Content */
+    --text-muted: #9CA3AF;
+    /* Muted Text */
+  }
+
+  /* GLOBAL CURSOR RESET */
+  *,
+  *::before,
+  *::after {
+    cursor: inherit;
+    box-sizing: border-box;
+  }
+
+  html {
+    height: 100%;
+    scroll-behavior: smooth;
+    cursor: default;
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    cursor: default;
+  }
+
+  #root {
+    height: 100%;
+    cursor: default;
+  }
+
+  /* POINTER CURSOR - ONLY FOR INTERACTIVE */
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="file"],
+  select,
+  label[for],
+  summary,
+  [onclick],
+  .clickable,
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  /* TEXT CURSOR */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="url"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+
+  /* DISABLED STATE */
+  [disabled],
+  [aria-disabled="true"],
+  .disabled,
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5;
+  }
+
+  /* OVERRIDE HOVER POINTER (Reset) */
+  div:hover,
+  span:hover,
+  p:hover,
+  h1:hover,
+  h2:hover,
+  h3:hover,
+  h4:hover,
+  h5:hover,
+  h6:hover,
+  section:hover,
+  article:hover,
+  aside:hover,
+  main:hover,
+  header:hover,
+  footer:hover,
+  nav:hover,
+  ul:hover,
+  li:hover {
+    cursor: inherit;
+  }
+
+  /* Restore pointer for interactive on hover */
+  a:hover,
+  button:hover,
+  [role="button"]:hover {
+    cursor: pointer;
+  }
+}
+
+/* ============================================
+   COMPONENT LAYER
+   ============================================ */
+@layer components {
+
+  /* Panel Card - NO POINTER */
+  /* Updated for Dual-Tone Dark Content look */
+  .panel-card {
+    @apply rounded-xl border border-white/10;
+    background-color: var(--bg-card);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    color: var(--text-main);
+    cursor: default !important;
+  }
+
+  /* Panel Card as Link - HAS POINTER */
+  a.panel-card {
+    cursor: pointer !important;
+    @apply hover:shadow-lg hover:border-blue-100 transition-all duration-300;
+  }
+
+  /* Form Input */
+  .input {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 outline-none transition-colors;
+    @apply focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white;
+    cursor: text !important;
+  }
+
+  .input:disabled {
+    cursor: not-allowed !important;
+    @apply bg-gray-100 text-gray-400;
+  }
+
+  /* Buttons - HAS POINTER */
+  .btn-accent {
+    @apply px-6 py-3 rounded-lg font-semibold text-white transition-all inline-flex items-center justify-center gap-2;
+    background-color: var(--accent-primary);
+    box-shadow: 0 4px 14px 0 rgba(0, 122, 255, 0.39);
+    cursor: pointer !important;
+  }
+
+  .btn-accent:hover:not(:disabled) {
+    @apply opacity-90;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.23);
+  }
+
+  .btn-accent:disabled {
+    @apply opacity-50 shadow-none;
+    cursor: not-allowed !important;
+    transform: none;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all inline-flex items-center justify-center gap-2;
+    @apply bg-white border border-gray-200 text-gray-600;
+    @apply hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300;
+    cursor: pointer !important;
+  }
+
+  .btn-secondary:disabled {
+    @apply opacity-50;
+    cursor: not-allowed !important;
+  }
+
+  /* Brand/Gradient Text - NO POINTER */
+  .brand {
+    @apply font-extrabold text-[#007AFF];
+    cursor: default !important;
+    font-family: 'Inter', system-ui, sans-serif;
+    /* Explicit font family */
+  }
+
+  .gradient-text {
+    @apply text-[#007AFF] font-bold;
+    cursor: default !important;
+    background-clip: text;
+    /* Ensure text clip works */
+    -webkit-background-clip: text;
+  }
+
+  /* Badges - NO POINTER */
+  .badge {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1 border;
+    cursor: default !important;
+  }
+
+  .badge-pending {
+    @apply bg-yellow-50 text-yellow-600 border-yellow-100;
+  }
+
+  .badge-accepted {
+    @apply bg-blue-50 text-blue-600 border-blue-100;
+  }
+
+  .badge-in-progress {
+    @apply bg-purple-50 text-purple-600 border-purple-100;
+  }
+
+  .badge-completed {
+    @apply bg-green-50 text-green-600 border-green-100;
+  }
+
+  .badge-cancelled {
+    @apply bg-red-50 text-red-600 border-red-100;
+  }
+
+  /* Alerts - NO POINTER */
+  .alert-success {
+    @apply p-4 rounded-lg bg-green-50 border border-green-200 text-green-700;
+    cursor: default !important;
+  }
+
+  .alert-error {
+    @apply p-4 rounded-lg bg-red-50 border border-red-200 text-red-700;
+    cursor: default !important;
+  }
+
+  .alert-warning {
+    @apply p-4 rounded-lg bg-yellow-50 border border-yellow-200 text-yellow-700;
+    cursor: default !important;
+  }
+
+  .alert-info {
+    @apply p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-700;
+    cursor: default !important;
+  }
+}
+
+/* ============================================
+   UTILITIES LAYER
+   ============================================ */
+@layer utilities {
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Force cursors */
+  .cursor-default {
+    cursor: default !important;
+  }
+
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  .cursor-text {
+    cursor: text !important;
+  }
+
+  .cursor-not-allowed {
+    cursor: not-allowed !important;
+  }
+
+  /* Hidden Scrollbar while allowing scroll */
+  .custom-scrollbar {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    background: transparent;
+  }
+}
