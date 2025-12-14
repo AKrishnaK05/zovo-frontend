@@ -185,11 +185,10 @@ const CreateJob = () => {
     }
     setIsSearching(true);
     try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=in`
-      );
-      const data = await response.json();
-      setSearchResults(data);
+      const response = await api.get(`/location/search?q=${encodeURIComponent(query)}`);
+      if (response.data.success) {
+        setSearchResults(response.data.data);
+      }
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -205,15 +204,16 @@ const CreateJob = () => {
   };
 
   const selectSearchResult = (result) => {
-    const address = result.display_name;
+    const address = result.formattedAddress;
+    // Fallback city extraction (backend might provide details if search endpoint supports it, otherwise parse)
     const parts = address.split(', ');
     const city = parts.length > 2 ? parts[parts.length - 3] : '';
 
     setFormData({
       ...formData,
       address: address,
-      city: city,
-      coordinates: [parseFloat(result.lon), parseFloat(result.lat)]
+      city: city, // Ideally backend should provide this, but fallback for now
+      coordinates: [parseFloat(result.lng), parseFloat(result.lat)]
     });
     setSearchQuery(address);
     setSearchResults([]);
@@ -230,20 +230,16 @@ const CreateJob = () => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
-          );
-          const data = await response.json();
-          if (data.display_name) {
-            const parts = data.display_name.split(', ');
-            const city = parts.length > 2 ? parts[parts.length - 3] : '';
+          const response = await api.get(`/location/reverse?lat=${lat}&lng=${lng}`);
+          if (response.data.success) {
+            const { formattedAddress, details } = response.data.data;
             setFormData({
               ...formData,
-              address: data.display_name,
-              city: city,
+              address: formattedAddress,
+              city: details?.city || formattedAddress.split(', ').slice(-3)[0] || '',
               coordinates: [lng, lat]
             });
-            setSearchQuery(data.display_name);
+            setSearchQuery(formattedAddress);
           }
         } catch (error) {
           console.error('Reverse geocode error:', error);
@@ -359,8 +355,8 @@ const CreateJob = () => {
               <button
                 onClick={() => step.num < currentStep && setCurrentStep(step.num)}
                 className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition ${currentStep >= step.num
-                    ? 'bg-purple-500 text-white'
-                    : 'bg-gray-800 text-gray-500'
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-gray-800 text-gray-500'
                   } ${step.num < currentStep ? 'cursor-pointer hover:bg-purple-600' : ''}`}
               >
                 {currentStep > step.num ? '✓' : step.num}
@@ -402,8 +398,8 @@ const CreateJob = () => {
                     <label
                       key={cat.value}
                       className={`relative cursor-pointer rounded-lg border p-4 transition text-center hover:bg-white/5 ${formData.category === cat.value
-                          ? 'border-purple-500 bg-purple-500/10'
-                          : 'border-gray-700'
+                        ? 'border-purple-500 bg-purple-500/10'
+                        : 'border-gray-700'
                         }`}
                     >
                       <input
@@ -467,7 +463,7 @@ const CreateJob = () => {
                           onClick={() => selectSearchResult(result)}
                           className="w-full px-4 py-3 text-left hover:bg-gray-700 transition border-b border-gray-700 last:border-0"
                         >
-                          <p className="text-white text-sm truncate">{result.display_name}</p>
+                          <p className="text-white text-sm truncate">{result.formattedAddress}</p>
                         </button>
                       ))}
                     </div>
@@ -556,10 +552,10 @@ const CreateJob = () => {
                           onClick={() => isAvailable && setFormData({ ...formData, scheduledDate: dateInfo.date, timeSlot: '' })}
                           disabled={!isAvailable}
                           className={`p-3 rounded-lg text-center transition ${isSelected
-                              ? 'bg-purple-500 text-white ring-2 ring-purple-400'
-                              : isAvailable
-                                ? 'bg-gray-800 text-white hover:bg-gray-700'
-                                : 'bg-gray-900 text-gray-600 cursor-not-allowed'
+                            ? 'bg-purple-500 text-white ring-2 ring-purple-400'
+                            : isAvailable
+                              ? 'bg-gray-800 text-white hover:bg-gray-700'
+                              : 'bg-gray-900 text-gray-600 cursor-not-allowed'
                             } ${dateInfo.isWeekend && isAvailable ? 'border border-yellow-500/30' : ''}`}
                         >
                           <div className="text-xs opacity-70">{dateInfo.dayName}</div>
@@ -596,10 +592,10 @@ const CreateJob = () => {
                             onClick={() => isAvailable && setFormData({ ...formData, timeSlot: slot.time })}
                             disabled={!isAvailable}
                             className={`p-4 rounded-lg text-center transition ${isSelected
-                                ? 'bg-cyan-500 text-white ring-2 ring-cyan-400'
-                                : isAvailable
-                                  ? 'bg-gray-800 text-white hover:bg-gray-700'
-                                  : 'bg-gray-900 text-gray-600 cursor-not-allowed line-through'
+                              ? 'bg-cyan-500 text-white ring-2 ring-cyan-400'
+                              : isAvailable
+                                ? 'bg-gray-800 text-white hover:bg-gray-700'
+                                : 'bg-gray-900 text-gray-600 cursor-not-allowed line-through'
                               }`}
                           >
                             <div className="font-semibold">{slot.display || formatTimeSlot(slot.time)}</div>

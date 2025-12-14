@@ -83,7 +83,7 @@ const LocationPicker = ({
 
     setIsSearching(true);
     try {
-      const response = await api.get(`/geo/search?address=${encodeURIComponent(query)}`);
+      const response = await api.get(`/location/search?q=${encodeURIComponent(query)}`);
       if (response.data.success) {
         setSearchResults(response.data.data);
       }
@@ -136,7 +136,7 @@ const LocationPicker = ({
 
         // Reverse geocode via Backend
         try {
-          const response = await api.get(`/geo/reverse?lat=${lat}&lng=${lng}`);
+          const response = await api.get(`/location/reverse?lat=${lat}&lng=${lng}`);
           if (response.data.success) {
             const { formattedAddress } = response.data.data;
             setAddress(formattedAddress);
@@ -161,7 +161,7 @@ const LocationPicker = ({
     setPosition(newPosition);
 
     try {
-      const response = await api.get(`/geo/reverse?lat=${newPosition[0]}&lng=${newPosition[1]}`);
+      const response = await api.get(`/location/reverse?lat=${newPosition[0]}&lng=${newPosition[1]}`);
       if (response.data.success) {
         setAddress(response.data.data.formattedAddress);
       }
