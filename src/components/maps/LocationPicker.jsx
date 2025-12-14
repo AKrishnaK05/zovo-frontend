@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import api from '../../services/api';
 
 // Fix for default marker icons in React-Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -44,8 +45,8 @@ const RecenterMap = ({ position }) => {
   return null;
 };
 
-const LocationPicker = ({ 
-  onLocationSelect, 
+const LocationPicker = ({
+  onLocationSelect,
   initialLocation = null,
   initialAddress = '',
   showSearch = true,
@@ -73,7 +74,7 @@ const LocationPicker = ({
     }
   }, [position, address]);
 
-  // Search for address using Nominatim (free, no API key)
+  // Search for address using Backend API
   const searchAddress = async (query) => {
     if (!query || query.length < 3) {
       setSearchResults([]);
@@ -82,11 +83,16 @@ const LocationPicker = ({
 
     setIsSearching(true);
     try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`
-      );
-      const data = await response.json();
-      setSearchResults(data);
+      const response = await api.get(`/geo/search`, { params: { address: query } });
+      const data = response.data.data; // Expecting { lat, lng, formattedAddress, ... } array or single object
+      // Backend might return an array or single object. Adapting to array.
+      const results = Array.isArray(data) ? data : [data];
+      setSearchResults(results.map(item => ({
+        lat: item.lat,
+        lon: item.lng,
+        display_name: item.formattedAddress,
+        type: 'address' // Default type
+      })));
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -98,11 +104,11 @@ const LocationPicker = ({
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    
+
     if (searchTimeout.current) {
       clearTimeout(searchTimeout.current);
     }
-    
+
     searchTimeout.current = setTimeout(() => {
       searchAddress(query);
     }, 500);
@@ -134,13 +140,11 @@ const LocationPicker = ({
 
         // Reverse geocode to get address
         try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
-          );
-          const data = await response.json();
-          if (data.display_name) {
-            setAddress(data.display_name);
-            setSearchQuery(data.display_name);
+          const response = await api.get(`/geo/reverse`, { params: { lat, lng } });
+          const data = response.data.data;
+          if (data && data.formattedAddress) {
+            setAddress(data.formattedAddress);
+            setSearchQuery(data.formattedAddress);
           }
         } catch (error) {
           console.error('Reverse geocode error:', error);
@@ -159,14 +163,12 @@ const LocationPicker = ({
   // Reverse geocode when marker is moved
   const handlePositionChange = async (newPosition) => {
     setPosition(newPosition);
-    
+
     try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${newPosition[0]}&lon=${newPosition[1]}`
-      );
-      const data = await response.json();
-      if (data.display_name) {
-        setAddress(data.display_name);
+      const response = await api.get(`/geo/reverse`, { params: { lat: newPosition[0], lng: newPosition[1] } });
+      const data = response.data.data;
+      if (data && data.formattedAddress) {
+        setAddress(data.formattedAddress);
       }
     } catch (error) {
       console.error('Reverse geocode error:', error);
