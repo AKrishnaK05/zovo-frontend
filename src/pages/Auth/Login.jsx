@@ -81,7 +81,7 @@ const Login = () => {
       if (result.success) {
         // Redirect based on role
         const redirects = {
-          admin: '/admin/dashboard',
+          admin: '/admin',
           worker: '/worker',
           customer: '/customer/home'
         };

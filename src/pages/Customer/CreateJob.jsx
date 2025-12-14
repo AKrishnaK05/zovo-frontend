@@ -140,32 +140,32 @@ const CreateJob = () => {
 
   const calculatePrice = async () => {
     setLoadingPrice(true);
-    
+
     // Calculate locally (since backend pricing route may not exist)
     const baseCategory = categories.find(c => c.value === formData.category);
     const basePrice = baseCategory?.basePrice || 499;
-    
+
     const selectedDate = new Date(formData.scheduledDate);
     const isWeekend = selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
     const isPeakHour = ['08:00', '09:00', '17:00', '18:00'].includes(formData.timeSlot);
-    
+
     let total = basePrice;
     const modifiers = [];
-    
+
     if (isWeekend) {
       const weekendSurge = basePrice * 0.2;
       modifiers.push({ name: 'Weekend Surge', amount: weekendSurge });
       total += weekendSurge;
     }
-    
+
     if (isPeakHour) {
       modifiers.push({ name: 'Peak Hour', amount: 50 });
       total += 50;
     }
-    
+
     const tax = total * 0.18; // 18% GST
     total += tax;
-    
+
     setPricing({
       breakdown: {
         basePrice,
@@ -174,7 +174,7 @@ const CreateJob = () => {
         total: Math.round(total * 100) / 100
       }
     });
-    
+
     setLoadingPrice(false);
   };
 
@@ -208,7 +208,7 @@ const CreateJob = () => {
     const address = result.display_name;
     const parts = address.split(', ');
     const city = parts.length > 2 ? parts[parts.length - 3] : '';
-    
+
     setFormData({
       ...formData,
       address: address,
@@ -358,24 +358,21 @@ const CreateJob = () => {
             <div className="flex items-center">
               <button
                 onClick={() => step.num < currentStep && setCurrentStep(step.num)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition ${
-                  currentStep >= step.num
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition ${currentStep >= step.num
                     ? 'bg-purple-500 text-white'
                     : 'bg-gray-800 text-gray-500'
-                } ${step.num < currentStep ? 'cursor-pointer hover:bg-purple-600' : ''}`}
+                  } ${step.num < currentStep ? 'cursor-pointer hover:bg-purple-600' : ''}`}
               >
                 {currentStep > step.num ? '✓' : step.num}
               </button>
-              <span className={`ml-3 hidden sm:block ${
-                currentStep >= step.num ? 'text-white' : 'text-gray-500'
-              }`}>
+              <span className={`ml-3 hidden sm:block ${currentStep >= step.num ? 'text-white' : 'text-gray-500'
+                }`}>
                 {step.label}
               </span>
             </div>
             {index < 2 && (
-              <div className={`flex-1 h-1 mx-4 rounded ${
-                currentStep > step.num ? 'bg-purple-500' : 'bg-gray-800'
-              }`}></div>
+              <div className={`flex-1 h-1 mx-4 rounded ${currentStep > step.num ? 'bg-purple-500' : 'bg-gray-800'
+                }`}></div>
             )}
           </div>
         ))}
@@ -391,7 +388,7 @@ const CreateJob = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          
+
           {/* STEP 1: Service & Location */}
           {currentStep === 1 && (
             <>
@@ -404,11 +401,10 @@ const CreateJob = () => {
                   {categories.map((cat) => (
                     <label
                       key={cat.value}
-                      className={`relative cursor-pointer rounded-lg border p-4 transition text-center hover:bg-white/5 ${
-                        formData.category === cat.value
+                      className={`relative cursor-pointer rounded-lg border p-4 transition text-center hover:bg-white/5 ${formData.category === cat.value
                           ? 'border-purple-500 bg-purple-500/10'
                           : 'border-gray-700'
-                      }`}
+                        }`}
                     >
                       <input
                         type="radio"
@@ -431,7 +427,7 @@ const CreateJob = () => {
                 <label className="block text-lg font-semibold text-white mb-4">
                   📍 Service Location *
                 </label>
-                
+
                 <div className="relative mb-4">
                   <div className="flex space-x-2">
                     <div className="relative flex-1">
@@ -542,7 +538,7 @@ const CreateJob = () => {
             <>
               <div className="panel-card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4">📅 Select Date</h3>
-                
+
                 {loadingDates ? (
                   <div className="flex items-center justify-center h-32">
                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500"></div>
@@ -552,20 +548,19 @@ const CreateJob = () => {
                     {(availableDates.length > 0 ? availableDates : generateDates()).slice(0, 14).map((dateInfo) => {
                       const isSelected = formData.scheduledDate === dateInfo.date;
                       const isAvailable = dateInfo.isAvailable !== false;
-                      
+
                       return (
                         <button
                           key={dateInfo.date}
                           type="button"
                           onClick={() => isAvailable && setFormData({ ...formData, scheduledDate: dateInfo.date, timeSlot: '' })}
                           disabled={!isAvailable}
-                          className={`p-3 rounded-lg text-center transition ${
-                            isSelected
+                          className={`p-3 rounded-lg text-center transition ${isSelected
                               ? 'bg-purple-500 text-white ring-2 ring-purple-400'
                               : isAvailable
                                 ? 'bg-gray-800 text-white hover:bg-gray-700'
                                 : 'bg-gray-900 text-gray-600 cursor-not-allowed'
-                          } ${dateInfo.isWeekend && isAvailable ? 'border border-yellow-500/30' : ''}`}
+                            } ${dateInfo.isWeekend && isAvailable ? 'border border-yellow-500/30' : ''}`}
                         >
                           <div className="text-xs opacity-70">{dateInfo.dayName}</div>
                           <div className="text-lg font-bold">{dateInfo.dayNumber}</div>
@@ -583,7 +578,7 @@ const CreateJob = () => {
               {formData.scheduledDate && (
                 <div className="panel-card p-6">
                   <h3 className="text-lg font-semibold text-white mb-4">🕐 Select Time Slot</h3>
-                  
+
                   {loadingSlots ? (
                     <div className="flex items-center justify-center h-32">
                       <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500"></div>
@@ -593,20 +588,19 @@ const CreateJob = () => {
                       {(timeSlots.length > 0 ? timeSlots : defaultTimeSlots.map(s => ({ ...s, isAvailable: true }))).map((slot) => {
                         const isSelected = formData.timeSlot === slot.time;
                         const isAvailable = slot.isAvailable !== false;
-                        
+
                         return (
                           <button
                             key={slot.time}
                             type="button"
                             onClick={() => isAvailable && setFormData({ ...formData, timeSlot: slot.time })}
                             disabled={!isAvailable}
-                            className={`p-4 rounded-lg text-center transition ${
-                              isSelected
+                            className={`p-4 rounded-lg text-center transition ${isSelected
                                 ? 'bg-cyan-500 text-white ring-2 ring-cyan-400'
                                 : isAvailable
                                   ? 'bg-gray-800 text-white hover:bg-gray-700'
                                   : 'bg-gray-900 text-gray-600 cursor-not-allowed line-through'
-                            }`}
+                              }`}
                           >
                             <div className="font-semibold">{slot.display || formatTimeSlot(slot.time)}</div>
                             {slot.isPeak && isAvailable && (
@@ -626,7 +620,7 @@ const CreateJob = () => {
           {currentStep === 3 && (
             <div className="panel-card p-6">
               <h3 className="text-lg font-semibold text-white mb-6">📋 Booking Summary</h3>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
                   <span className="text-3xl">{categories.find(c => c.value === formData.category)?.icon}</span>
@@ -667,7 +661,7 @@ const CreateJob = () => {
         <div className="lg:col-span-1">
           <div className="panel-card p-6 sticky top-6">
             <h3 className="text-lg font-semibold text-white mb-4">Price Summary</h3>
-            
+
             {pricing ? (
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
@@ -731,7 +725,7 @@ const CreateJob = () => {
                   )}
                 </button>
               )}
-              
+
               {currentStep > 1 && (
                 <button type="button" onClick={() => setCurrentStep(currentStep - 1)} className="w-full btn-secondary">
                   Back

@@ -83,16 +83,10 @@ const LocationPicker = ({
 
     setIsSearching(true);
     try {
-      const response = await api.get(`/geo/search`, { params: { address: query } });
-      const data = response.data.data; // Expecting { lat, lng, formattedAddress, ... } array or single object
-      // Backend might return an array or single object. Adapting to array.
-      const results = Array.isArray(data) ? data : [data];
-      setSearchResults(results.map(item => ({
-        lat: item.lat,
-        lon: item.lng,
-        display_name: item.formattedAddress,
-        type: 'address' // Default type
-      })));
+      const response = await api.get(`/geo/search?address=${encodeURIComponent(query)}`);
+      if (response.data.success) {
+        setSearchResults(response.data.data);
+      }
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -117,10 +111,12 @@ const LocationPicker = ({
   // Select a search result
   const selectResult = (result) => {
     const lat = parseFloat(result.lat);
-    const lng = parseFloat(result.lon);
+    const lng = parseFloat(result.lng); // Backend returns 'lng'
+    if (isNaN(lat) || isNaN(lng)) return;
+
     setPosition([lat, lng]);
-    setAddress(result.display_name);
-    setSearchQuery(result.display_name);
+    setAddress(result.formattedAddress);
+    setSearchQuery(result.formattedAddress);
     setSearchResults([]);
   };
 
@@ -138,13 +134,13 @@ const LocationPicker = ({
         const lng = pos.coords.longitude;
         setPosition([lat, lng]);
 
-        // Reverse geocode to get address
+        // Reverse geocode via Backend
         try {
-          const response = await api.get(`/geo/reverse`, { params: { lat, lng } });
-          const data = response.data.data;
-          if (data && data.formattedAddress) {
-            setAddress(data.formattedAddress);
-            setSearchQuery(data.formattedAddress);
+          const response = await api.get(`/geo/reverse?lat=${lat}&lng=${lng}`);
+          if (response.data.success) {
+            const { formattedAddress } = response.data.data;
+            setAddress(formattedAddress);
+            setSearchQuery(formattedAddress);
           }
         } catch (error) {
           console.error('Reverse geocode error:', error);
@@ -165,10 +161,9 @@ const LocationPicker = ({
     setPosition(newPosition);
 
     try {
-      const response = await api.get(`/geo/reverse`, { params: { lat: newPosition[0], lng: newPosition[1] } });
-      const data = response.data.data;
-      if (data && data.formattedAddress) {
-        setAddress(data.formattedAddress);
+      const response = await api.get(`/geo/reverse?lat=${newPosition[0]}&lng=${newPosition[1]}`);
+      if (response.data.success) {
+        setAddress(response.data.data.formattedAddress);
       }
     } catch (error) {
       console.error('Reverse geocode error:', error);
@@ -226,8 +221,7 @@ const LocationPicker = ({
                   <div className="flex items-start space-x-3">
                     <span className="text-purple-400 mt-1">📍</span>
                     <div>
-                      <p className="text-white text-sm">{result.display_name}</p>
-                      <p className="text-gray-500 text-xs mt-1">{result.type}</p>
+                      <p className="text-white text-sm">{result.formattedAddress}</p>
                     </div>
                   </div>
                 </button>
