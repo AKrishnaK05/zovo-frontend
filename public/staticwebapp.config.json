@@ -31,7 +31,7 @@
         }
     },
     "globalHeaders": {
-        "content-security-policy": "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
+        "Content-Security-Policy": "default-src 'self' https: wss:; connect-src 'self' https: wss:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; object-src 'none'"
     },
     "mimeTypes": {
         ".json": "application/json"

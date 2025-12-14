@@ -1,5 +1,0 @@
-{
-    "globalHeaders": {
-        "Content-Security-Policy": "default-src 'self' https: wss:; connect-src https: wss:;"
-    }
-}
