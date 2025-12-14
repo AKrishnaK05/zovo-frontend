@@ -31,7 +31,7 @@
         }
     },
     "globalHeaders": {
-        "Content-Security-Policy": "default-src 'self' https: wss:; connect-src 'self' https: wss:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; object-src 'none'"
+        "Content-Security-Policy": "default-src 'self' https: wss:; connect-src 'self' https: wss:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; object-src 'none'"
     },
     "mimeTypes": {
         ".json": "application/json"
