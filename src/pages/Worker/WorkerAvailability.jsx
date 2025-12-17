@@ -1,6 +1,6 @@
-// frontend/src/pages/Worker/WorkerAvailability.jsx
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
+import { Lightbulb } from 'lucide-react';
 
 const WorkerAvailability = () => {
   const [selectedDates, setSelectedDates] = useState([]);
@@ -42,8 +42,8 @@ const WorkerAvailability = () => {
   const days = getNext14Days();
 
   const toggleDate = (date) => {
-    setSelectedDates(prev => 
-      prev.includes(date) 
+    setSelectedDates(prev =>
+      prev.includes(date)
         ? prev.filter(d => d !== date)
         : [...prev, date]
     );
@@ -111,11 +111,10 @@ const WorkerAvailability = () => {
 
       {/* Message */}
       {message.text && (
-        <div className={`mb-6 p-4 rounded-lg ${
-          message.type === 'success'
-            ? 'bg-green-500/10 border border-green-500/20 text-green-400'
-            : 'bg-red-500/10 border border-red-500/20 text-red-400'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg ${message.type === 'success'
+          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+          : 'bg-red-500/10 border border-red-500/20 text-red-400'
+          }`}>
           {message.text}
         </div>
       )}
@@ -155,11 +154,10 @@ const WorkerAvailability = () => {
               <button
                 key={day.date}
                 onClick={() => toggleDate(day.date)}
-                className={`p-3 rounded-lg text-center transition ${
-                  isSelected
-                    ? 'bg-purple-500 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                } ${day.isWeekend ? 'border border-yellow-500/30' : ''}`}
+                className={`p-3 rounded-lg text-center transition ${isSelected
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  } ${day.isWeekend ? 'border border-yellow-500/30' : ''}`}
               >
                 <div className="text-xs opacity-70">{day.dayName}</div>
                 <div className="text-lg font-bold">{day.dayNumber}</div>
@@ -171,7 +169,7 @@ const WorkerAvailability = () => {
 
         <p className="text-gray-500 text-sm mt-4">
           {selectedDates.length} day(s) selected
-          {selectedDates.some(d => days.find(day => day.date === d)?.isWeekend) && 
+          {selectedDates.some(d => days.find(day => day.date === d)?.isWeekend) &&
             <span className="text-yellow-400 ml-2">• Weekend days earn 20% more</span>
           }
         </p>
@@ -213,11 +211,10 @@ const WorkerAvailability = () => {
               <button
                 key={slot}
                 onClick={() => toggleSlot(slot)}
-                className={`p-3 rounded-lg text-center transition ${
-                  isSelected
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
+                className={`p-3 rounded-lg text-center transition ${isSelected
+                  ? 'bg-cyan-500 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  }`}
               >
                 <div className="font-medium">{formatTime(slot)}</div>
                 {isPeakHour && (
@@ -230,7 +227,7 @@ const WorkerAvailability = () => {
 
         <p className="text-gray-500 text-sm mt-4">
           {selectedSlots.length} slot(s) selected
-          {selectedSlots.some(s => ['08:00', '09:00', '17:00', '18:00'].includes(s)) && 
+          {selectedSlots.some(s => ['08:00', '09:00', '17:00', '18:00'].includes(s)) &&
             <span className="text-yellow-400 ml-2">• Peak hours earn extra</span>
           }
         </p>
@@ -273,13 +270,15 @@ const WorkerAvailability = () => {
       {/* Info Box */}
       <div className="mt-6 p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-lg">
         <div className="flex items-start space-x-3">
-          <span className="text-2xl">💡</span>
+          <div className="p-2 bg-cyan-500/20 rounded-lg text-cyan-400">
+            <Lightbulb size={24} />
+          </div>
           <div>
             <h4 className="text-white font-medium">Tips</h4>
-            <ul className="text-gray-400 text-sm mt-1 space-y-1">
-              <li>• Jobs will only be shown to you during your available times</li>
-              <li>• Weekend and peak hour jobs often pay more</li>
-              <li>• Update your availability weekly for best results</li>
+            <ul className="text-gray-400 text-sm mt-1 space-y-2">
+              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500" /> Jobs will only be shown to you during your available times</li>
+              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500" /> Weekend and peak hour jobs often pay more</li>
+              <li className="flex items-start gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-500" /> Update your availability weekly for best results</li>
             </ul>
           </div>
         </div>

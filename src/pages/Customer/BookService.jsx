@@ -4,6 +4,12 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../../services/api';
 import LocationPicker from '../../components/maps/LocationPicker';
 import { useData } from '../../context/DataContext';
+import {
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck,
+  Package, Search, Check, AlertTriangle, X, MapPin, Calendar, Clock, ArrowLeft,
+  ChevronRight, ClipboardList
+} from 'lucide-react';
+
 const BookService = () => {
   const { category: categorySlug } = useParams();
   const navigate = useNavigate();
@@ -11,23 +17,23 @@ const BookService = () => {
 
   // Fallback categories data
   const FALLBACK_CATEGORIES = [
-    { 
-      slug: 'plumbing', 
-      name: 'Plumbing', 
-      icon: '🔧', 
-      basePrice: 499, 
-      minDuration: 60, 
+    {
+      slug: 'plumbing',
+      name: 'Plumbing',
+      icon: <Wrench size={32} />,
+      basePrice: 499,
+      minDuration: 60,
       subServices: [
         { name: 'Tap Repair', price: 199, duration: 30 },
         { name: 'Pipe Leakage', price: 399, duration: 60 },
         { name: 'Water Tank Cleaning', price: 999, duration: 120 }
       ]
     },
-    { 
-      slug: 'electrical', 
-      name: 'Electrical', 
-      icon: '⚡', 
-      basePrice: 599, 
+    {
+      slug: 'electrical',
+      name: 'Electrical',
+      icon: <Zap size={32} />,
+      basePrice: 599,
       minDuration: 60,
       subServices: [
         { name: 'Fan Installation', price: 299, duration: 45 },
@@ -35,11 +41,11 @@ const BookService = () => {
         { name: 'MCB Change', price: 499, duration: 60 }
       ]
     },
-    { 
-      slug: 'cleaning', 
-      name: 'Cleaning', 
-      icon: '🧹', 
-      basePrice: 399, 
+    {
+      slug: 'cleaning',
+      name: 'Cleaning',
+      icon: <SprayCan size={32} />,
+      basePrice: 399,
       minDuration: 120,
       subServices: [
         { name: 'Bathroom Cleaning', price: 499, duration: 60 },
@@ -47,44 +53,44 @@ const BookService = () => {
         { name: 'Full Home Clean', price: 2999, duration: 240 }
       ]
     },
-    { 
-      slug: 'painting', 
-      name: 'Painting', 
-      icon: '🎨', 
-      basePrice: 1999, 
+    {
+      slug: 'painting',
+      name: 'Painting',
+      icon: <Paintbrush size={32} />,
+      basePrice: 1999,
       minDuration: 240,
       subServices: [
         { name: 'Single Room', price: 2500, duration: 240 },
         { name: 'Wall Touchup', price: 999, duration: 120 }
       ]
     },
-    { 
-      slug: 'carpentry', 
-      name: 'Carpentry', 
-      icon: '🪚', 
-      basePrice: 699, 
+    {
+      slug: 'carpentry',
+      name: 'Carpentry',
+      icon: <Hammer size={32} />,
+      basePrice: 699,
       minDuration: 60,
       subServices: [
         { name: 'Lock Repair', price: 299, duration: 30 },
         { name: 'Furniture Assembly', price: 599, duration: 90 }
       ]
     },
-    { 
-      slug: 'appliance', 
-      name: 'Appliance Repair', 
-      icon: '🔌', 
-      basePrice: 599, 
+    {
+      slug: 'appliance',
+      name: 'Appliance Repair',
+      icon: <Plug size={32} />,
+      basePrice: 599,
       minDuration: 60,
       subServices: [
         { name: 'Washing Machine Check', price: 399, duration: 45 },
         { name: 'Refrigerator Check', price: 499, duration: 45 }
       ]
     },
-    { 
-      slug: 'ac-service', 
-      name: 'AC Service', 
-      icon: '❄️', 
-      basePrice: 799, 
+    {
+      slug: 'ac-service',
+      name: 'AC Service',
+      icon: <Snowflake size={32} />,
+      basePrice: 799,
       minDuration: 60,
       subServices: [
         { name: 'AC Service (Split)', price: 599, duration: 60 },
@@ -92,11 +98,11 @@ const BookService = () => {
         { name: 'Gas Filling', price: 2499, duration: 60 }
       ]
     },
-    { 
-      slug: 'pest-control', 
-      name: 'Pest Control', 
-      icon: '🦟', 
-      basePrice: 899, 
+    {
+      slug: 'pest-control',
+      name: 'Pest Control',
+      icon: <Bug size={32} />,
+      basePrice: 899,
       minDuration: 60,
       subServices: [
         { name: 'Cockroach Control', price: 599, duration: 60 },
@@ -104,11 +110,11 @@ const BookService = () => {
         { name: 'Termite Control', price: 1499, duration: 120 }
       ]
     },
-    { 
-      slug: 'salon', 
-      name: 'Home Salon', 
-      icon: '💇‍♀️', 
-      basePrice: 499, 
+    {
+      slug: 'salon',
+      name: 'Home Salon',
+      icon: <Scissors size={32} />,
+      basePrice: 499,
       minDuration: 45,
       subServices: [
         { name: 'Haircut', price: 299, duration: 30 },
@@ -116,11 +122,11 @@ const BookService = () => {
         { name: 'Manicure & Pedicure', price: 799, duration: 60 }
       ]
     },
-    { 
-      slug: 'men-grooming', 
-      name: "Men's Grooming", 
-      icon: '💇‍♂️', 
-      basePrice: 399, 
+    {
+      slug: 'men-grooming',
+      name: "Men's Grooming",
+      icon: <Scissors size={32} />,
+      basePrice: 399,
       minDuration: 30,
       subServices: [
         { name: 'Haircut', price: 199, duration: 30 },
@@ -128,11 +134,11 @@ const BookService = () => {
         { name: 'Head Massage', price: 149, duration: 20 }
       ]
     },
-    { 
-      slug: 'movers', 
-      name: 'Packers & Movers', 
-      icon: '🚚', 
-      basePrice: 2999, 
+    {
+      slug: 'movers',
+      name: 'Packers & Movers',
+      icon: <Truck size={32} />,
+      basePrice: 2999,
       minDuration: 180,
       subServices: [
         { name: '1 BHK Moving', price: 2999, duration: 180 },
@@ -140,11 +146,11 @@ const BookService = () => {
         { name: '3 BHK Moving', price: 7999, duration: 360 }
       ]
     },
-    { 
-      slug: 'other', 
-      name: 'Other', 
-      icon: '📦', 
-      basePrice: 499, 
+    {
+      slug: 'other',
+      name: 'Other',
+      icon: <Package size={32} />,
+      basePrice: 499,
       minDuration: 60,
       subServices: []
     }
@@ -166,7 +172,7 @@ const BookService = () => {
 
   // Step state
   const [currentStep, setCurrentStep] = useState(1);
-  
+
   // Data states
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -216,13 +222,13 @@ const BookService = () => {
 
   const canProceed = () => {
     switch (currentStep) {
-      case 1: 
+      case 1:
         return location.address && location.address.length > 0;
-      case 2: 
+      case 2:
         return selectedDate && selectedSlot;
-      case 3: 
+      case 3:
         return true;
-      default: 
+      default:
         return false;
     }
   };
@@ -242,10 +248,10 @@ const BookService = () => {
       if (fallback) {
         setCategory(fallback);
       } else {
-        setCategory({ 
-          slug: categorySlug, 
-          name: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1).replace(/-/g, ' '), 
-          icon: '🛠️', 
+        setCategory({
+          slug: categorySlug,
+          name: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1).replace(/-/g, ' '),
+          icon: <Wrench size={32} />,
           basePrice: 499,
           minDuration: 60,
           subServices: []
@@ -293,9 +299,9 @@ const BookService = () => {
 
   const fetchTimeSlots = async () => {
     if (!selectedDate) return;
-    
+
     console.log('Fetching slots for:', { categorySlug, selectedDate });
-    
+
     setLoadingSlots(true);
     setTimeSlots([]);
 
@@ -303,9 +309,9 @@ const BookService = () => {
       const response = await api.get(`/availability/slots`, {
         params: { date: selectedDate, category: categorySlug }
       });
-      
+
       console.log('Slots API response:', response.data);
-      
+
       if (response.data?.data && response.data.data.length > 0) {
         setTimeSlots(response.data.data);
       } else {
@@ -322,12 +328,12 @@ const BookService = () => {
 
   const calculatePrice = () => {
     if (!category) return;
-    
+
     setLoadingPrice(true);
-    
+
     const base = category.basePrice || 499;
     const subServicesTotal = selectedSubServices.reduce(
-      (acc, s) => acc + (s.price * (s.quantity || 1)), 
+      (acc, s) => acc + (s.price * (s.quantity || 1)),
       0
     );
     let currentTotal = base + subServicesTotal;
@@ -363,7 +369,7 @@ const BookService = () => {
         total: finalTotal
       }
     });
-    
+
     setLoadingPrice(false);
   };
 
@@ -387,7 +393,7 @@ const BookService = () => {
   const handleLocationSelect = (locationData) => {
     setLocation({
       address: locationData.address || '',
-      city: locationData.city || '', 
+      city: locationData.city || '',
       coordinates: locationData.coordinates || null
     });
   };
@@ -431,13 +437,13 @@ const BookService = () => {
 
       const response = await api.post('/jobs', jobData);
       console.log('Job created:', response.data);
-      
+
       navigate('/customer/history');
     } catch (error) {
       console.error('Booking error:', error.response?.data || error);
       setError(
-        error.response?.data?.error || 
-        error.response?.data?.message || 
+        error.response?.data?.error ||
+        error.response?.data?.message ||
         'Failed to create booking. Please try again.'
       );
     } finally {
@@ -461,11 +467,11 @@ const BookService = () => {
   if (!category) {
     return (
       <div className="text-center py-12">
-        <div className="text-6xl mb-4">🔍</div>
+        <div className="flex justify-center mb-4"><Search size={64} className="text-gray-600" /></div>
         <h2 className="text-2xl font-bold text-white mb-2">Service Not Found</h2>
         <p className="text-gray-400 mb-4">The service you're looking for doesn't exist.</p>
-        <Link to="/customer" className="text-purple-400 hover:text-purple-300">
-          ← Back to Services
+        <Link to="/customer" className="text-purple-400 hover:text-purple-300 flex items-center justify-center gap-2">
+          <ArrowLeft size={16} /> Back to Services
         </Link>
       </div>
     );
@@ -475,8 +481,8 @@ const BookService = () => {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <Link to="/customer" className="text-gray-400 hover:text-white text-sm mb-4 inline-block">
-          ← Back to Services
+        <Link to="/customer" className="text-gray-400 hover:text-white text-sm mb-4 inline-flex items-center gap-2">
+          <ArrowLeft size={16} /> Back to Services
         </Link>
         <div className="flex items-center space-x-4">
           <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 flex items-center justify-center text-4xl">
@@ -498,23 +504,20 @@ const BookService = () => {
         ].map((step, index) => (
           <div key={step.num} className="flex items-center flex-1">
             <div className="flex items-center">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-colors ${
-                currentStep >= step.num
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-gray-800 text-gray-500'
-              }`}>
-                {currentStep > step.num ? '✓' : step.num}
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-colors ${currentStep >= step.num
+                ? 'bg-purple-500 text-white'
+                : 'bg-gray-800 text-gray-500'
+                }`}>
+                {currentStep > step.num ? <Check size={20} /> : step.num}
               </div>
-              <span className={`ml-3 hidden sm:block transition-colors ${
-                currentStep >= step.num ? 'text-white' : 'text-gray-500'
-              }`}>
+              <span className={`ml-3 hidden sm:block transition-colors ${currentStep >= step.num ? 'text-white' : 'text-gray-500'
+                }`}>
                 {step.label}
               </span>
             </div>
             {index < 2 && (
-              <div className={`flex-1 h-1 mx-4 rounded transition-colors ${
-                currentStep > step.num ? 'bg-purple-500' : 'bg-gray-800'
-              }`} />
+              <div className={`flex-1 h-1 mx-4 rounded transition-colors ${currentStep > step.num ? 'bg-purple-500' : 'bg-gray-800'
+                }`} />
             )}
           </div>
         ))}
@@ -523,13 +526,13 @@ const BookService = () => {
       {/* Error Display */}
       {error && (
         <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg flex items-center">
-          <span className="mr-2">⚠️</span>
+          <AlertTriangle className="mr-2" size={20} />
           {error}
-          <button 
+          <button
             onClick={() => setError('')}
             className="ml-auto text-red-400 hover:text-red-300"
           >
-            ✕
+            <X size={20} />
           </button>
         </div>
       )}
@@ -538,7 +541,7 @@ const BookService = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          
+
           {/* Step 1: Service & Location */}
           {currentStep === 1 && (
             <>
@@ -554,19 +557,17 @@ const BookService = () => {
                       return (
                         <div
                           key={subService.name}
-                          className={`p-4 rounded-lg border transition cursor-pointer ${
-                            selected
-                              ? 'border-purple-500 bg-purple-500/10'
-                              : 'border-gray-700 hover:border-gray-600'
-                          }`}
+                          className={`p-4 rounded-lg border transition cursor-pointer ${selected
+                            ? 'border-purple-500 bg-purple-500/10'
+                            : 'border-gray-700 hover:border-gray-600'
+                            }`}
                           onClick={() => toggleSubService(subService)}
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                              <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${
-                                selected ? 'bg-purple-500 border-purple-500' : 'border-gray-600'
-                              }`}>
-                                {selected && <span className="text-white text-sm">✓</span>}
+                              <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${selected ? 'bg-purple-500 border-purple-500' : 'border-gray-600'
+                                }`}>
+                                {selected && <Check size={14} className="text-white" />}
                               </div>
                               <div>
                                 <p className="text-white font-medium">{subService.name}</p>
@@ -575,13 +576,13 @@ const BookService = () => {
                             </div>
                             <div className="flex items-center space-x-4">
                               {selected && (
-                                <div 
-                                  className="flex items-center space-x-2" 
+                                <div
+                                  className="flex items-center space-x-2"
                                   onClick={e => e.stopPropagation()}
                                 >
                                   <button
                                     onClick={() => updateSubServiceQuantity(
-                                      subService.name, 
+                                      subService.name,
                                       (selected.quantity || 1) - 1
                                     )}
                                     className="w-8 h-8 rounded bg-gray-700 text-white flex items-center justify-center hover:bg-gray-600"
@@ -594,7 +595,7 @@ const BookService = () => {
                                   </span>
                                   <button
                                     onClick={() => updateSubServiceQuantity(
-                                      subService.name, 
+                                      subService.name,
                                       (selected.quantity || 1) + 1
                                     )}
                                     className="w-8 h-8 rounded bg-gray-700 text-white flex items-center justify-center hover:bg-gray-600"
@@ -616,7 +617,7 @@ const BookService = () => {
               {/* Location Selection */}
               <div className="panel-card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4">
-                  📍 Service Location
+                  <MapPin size={20} className="inline mr-2" /> Service Location
                 </h3>
                 <LocationPicker
                   onLocationSelect={handleLocationSelect}
@@ -625,8 +626,8 @@ const BookService = () => {
                 />
                 {location.address && (
                   <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                    <p className="text-green-400 text-sm">
-                      ✓ Location selected: {location.address}
+                    <p className="text-green-400 text-sm flex items-center">
+                      <Check size={16} className="mr-2" /> Location selected: {location.address}
                     </p>
                   </div>
                 )}
@@ -640,25 +641,24 @@ const BookService = () => {
               {/* Date Selection */}
               <div className="panel-card p-6">
                 <h3 className="text-lg font-semibold text-white mb-4">
-                  📅 Select Date
+                  <Calendar size={20} className="inline mr-2" /> Select Date
                 </h3>
                 <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
                   {availableDates.slice(0, 14).map((dateInfo) => {
                     const isSelected = selectedDate === dateInfo.date;
                     const isAvailable = dateInfo.isAvailable !== false;
-                    
+
                     return (
                       <button
                         key={dateInfo.date}
                         onClick={() => isAvailable && setSelectedDate(dateInfo.date)}
                         disabled={!isAvailable}
-                        className={`p-3 rounded-lg text-center transition ${
-                          isSelected
-                            ? 'bg-purple-500 text-white ring-2 ring-purple-400'
-                            : isAvailable
-                              ? 'bg-gray-800 text-white hover:bg-gray-700'
-                              : 'bg-gray-900 text-gray-600 cursor-not-allowed'
-                        } ${dateInfo.isWeekend && isAvailable ? 'border border-yellow-500/30' : ''}`}
+                        className={`p-3 rounded-lg text-center transition ${isSelected
+                          ? 'bg-purple-500 text-white ring-2 ring-purple-400'
+                          : isAvailable
+                            ? 'bg-gray-800 text-white hover:bg-gray-700'
+                            : 'bg-gray-900 text-gray-600 cursor-not-allowed'
+                          } ${dateInfo.isWeekend && isAvailable ? 'border border-yellow-500/30' : ''}`}
                       >
                         <div className="text-xs text-gray-400">{dateInfo.dayName}</div>
                         <div className="text-lg font-bold">{dateInfo.dayNumber}</div>
@@ -676,9 +676,9 @@ const BookService = () => {
               {selectedDate && (
                 <div className="panel-card p-6">
                   <h3 className="text-lg font-semibold text-white mb-4">
-                    🕐 Select Time Slot
+                    <Clock size={20} className="inline mr-2" /> Select Time Slot
                   </h3>
-                  
+
                   {loadingSlots ? (
                     <div className="flex items-center justify-center h-32">
                       <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500"></div>
@@ -687,7 +687,7 @@ const BookService = () => {
                   ) : timeSlots.length === 0 ? (
                     <div className="text-center py-8">
                       <p className="text-gray-400">No time slots available for this date.</p>
-                      <button 
+                      <button
                         onClick={fetchTimeSlots}
                         className="mt-2 text-purple-400 hover:text-purple-300"
                       >
@@ -699,19 +699,18 @@ const BookService = () => {
                       {timeSlots.map((slot) => {
                         const isSelected = selectedSlot === slot.time;
                         const isAvailable = slot.isAvailable !== false;
-                        
+
                         return (
                           <button
                             key={slot.time}
                             onClick={() => isAvailable && setSelectedSlot(slot.time)}
                             disabled={!isAvailable}
-                            className={`p-4 rounded-lg text-center transition relative ${
-                              isSelected
-                                ? 'bg-purple-500 text-white ring-2 ring-purple-400'
-                                : isAvailable
-                                  ? 'bg-gray-800 text-white hover:bg-gray-700'
-                                  : 'bg-gray-900 text-gray-600 cursor-not-allowed line-through'
-                            }`}
+                            className={`p-4 rounded-lg text-center transition relative ${isSelected
+                              ? 'bg-purple-500 text-white ring-2 ring-purple-400'
+                              : isAvailable
+                                ? 'bg-gray-800 text-white hover:bg-gray-700'
+                                : 'bg-gray-900 text-gray-600 cursor-not-allowed line-through'
+                              }`}
                           >
                             <div className="font-semibold">{slot.displayTime}</div>
                             {slot.isPeakHour && isAvailable && (
@@ -731,9 +730,9 @@ const BookService = () => {
           {currentStep === 3 && (
             <div className="panel-card p-6">
               <h3 className="text-lg font-semibold text-white mb-4">
-                📋 Booking Summary
+                <ClipboardList size={20} className="inline mr-2" /> Booking Summary
               </h3>
-              
+
               <div className="space-y-4">
                 {/* Service Info */}
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
@@ -745,8 +744,8 @@ const BookService = () => {
                     {selectedSubServices.length > 0 ? (
                       <div className="mt-2 space-y-1">
                         {selectedSubServices.map((sub) => (
-                          <p key={sub.name} className="text-gray-400 text-sm">
-                            • {sub.name} {sub.quantity > 1 ? `x${sub.quantity}` : ''} - ₹{sub.price * (sub.quantity || 1)}
+                          <p key={sub.name} className="text-gray-400 text-sm flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span> {sub.name} {sub.quantity > 1 ? `x${sub.quantity}` : ''} - ₹{sub.price * (sub.quantity || 1)}
                           </p>
                         ))}
                       </div>
@@ -758,8 +757,8 @@ const BookService = () => {
 
                 {/* Location Info */}
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
-                  <div className="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center text-2xl">
-                    📍
+                  <div className="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+                    <MapPin size={24} />
                   </div>
                   <div>
                     <h4 className="text-white font-medium">Service Location</h4>
@@ -769,8 +768,8 @@ const BookService = () => {
 
                 {/* Date & Time Info */}
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
-                  <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center text-2xl">
-                    📅
+                  <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400">
+                    <Calendar size={24} />
                   </div>
                   <div>
                     <h4 className="text-white font-medium">Date & Time</h4>
@@ -807,7 +806,7 @@ const BookService = () => {
         <div className="lg:col-span-1">
           <div className="panel-card p-6 sticky top-6">
             <h3 className="text-lg font-semibold text-white mb-4">Price Summary</h3>
-            
+
             {loadingPrice ? (
               <div className="flex items-center justify-center h-32">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500"></div>
@@ -900,10 +899,10 @@ const BookService = () => {
                   )}
                 </button>
               )}
-              
+
               {currentStep > 1 && (
-                <button 
-                  onClick={() => setCurrentStep(currentStep - 1)} 
+                <button
+                  onClick={() => setCurrentStep(currentStep - 1)}
                   className="w-full py-3 px-4 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition"
                 >
                   Back

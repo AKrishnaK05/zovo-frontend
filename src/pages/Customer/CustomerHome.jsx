@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 import {
-  ClipboardList, Wrench, Clock, CheckCircle, MapPin, Calendar, Tag, Star,
+  ClipboardList, Wrench, Clock, CheckCircle, MapPin, Calendar, Tag, Star, User, RefreshCcw,
   Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck, Sprout, Shirt, ChefHat, Shield, Laptop, Smartphone, Car, Camera, BookOpen, Dumbbell, HeartHandshake, Package
 } from 'lucide-react';
 
@@ -134,8 +134,8 @@ const CustomerHome = () => {
         <div className="mb-8 p-4 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-2xl">
-                ⭐
+              <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-2xl text-yellow-500">
+                <Star size={24} fill="currentColor" />
               </div>
               <div>
                 <h3 className="text-white font-semibold">
@@ -167,7 +167,7 @@ const CustomerHome = () => {
                   to={`/customer/review/${job._id}`}
                   className="px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm rounded-lg hover:from-purple-600 hover:to-pink-600 transition"
                 >
-                  ⭐ Review
+                  <div className="flex items-center gap-1"><Star size={14} /> Review</div>
                 </Link>
               </div>
             ))}
@@ -177,20 +177,20 @@ const CustomerHome = () => {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <Link to="/customer/history" className="panel-card p-4 hover:bg-white/5 transition text-center">
-          <span className="text-2xl mb-2 block">📋</span>
+        <Link to="/customer/history" className="panel-card p-4 hover:bg-white/5 transition text-center group">
+          <div className="flex justify-center mb-2"><ClipboardList size={28} className="text-blue-400 group-hover:scale-110 transition-transform" /></div>
           <span className="text-white text-sm font-medium">My Bookings</span>
         </Link>
-        <Link to="/customer/profile" className="panel-card p-4 hover:bg-white/5 transition text-center">
-          <span className="text-2xl mb-2 block">👤</span>
+        <Link to="/customer/profile" className="panel-card p-4 hover:bg-white/5 transition text-center group">
+          <div className="flex justify-center mb-2"><User size={28} className="text-purple-400 group-hover:scale-110 transition-transform" /></div>
           <span className="text-white text-sm font-medium">Profile</span>
         </Link>
-        <button onClick={refreshData} className="panel-card p-4 hover:bg-white/5 transition text-center">
-          <span className="text-2xl mb-2 block">🔄</span>
+        <button onClick={refreshData} className="panel-card p-4 hover:bg-white/5 transition text-center group">
+          <div className="flex justify-center mb-2"><RefreshCcw size={28} className="text-green-400 group-hover:rotate-180 transition-transform" /></div>
           <span className="text-white text-sm font-medium">Refresh</span>
         </button>
-        <Link to="/customer/history?filter=completed" className="panel-card p-4 hover:bg-white/5 transition text-center">
-          <span className="text-2xl mb-2 block">⭐</span>
+        <Link to="/customer/history?filter=completed" className="panel-card p-4 hover:bg-white/5 transition text-center group">
+          <div className="flex justify-center mb-2"><Star size={28} className="text-yellow-400 group-hover:scale-110 transition-transform" /></div>
           <span className="text-white text-sm font-medium">Write Review</span>
         </Link>
       </div>
@@ -232,7 +232,7 @@ const CustomerHome = () => {
 
         {jobs.length === 0 ? (
           <div className="panel-card p-12 text-center">
-            <div className="text-6xl mb-4">📭</div>
+            <div className="flex justify-center mb-4"><Package size={64} className="text-gray-600" /></div>
             <h3 className="text-xl font-semibold text-white mb-2">No Bookings Yet</h3>
             <p className="text-gray-400 mb-6">Book your first service to get started!</p>
           </div>
@@ -273,7 +273,7 @@ const CustomerHome = () => {
                         to={`/customer/review/${job._id}`}
                         className="px-3 py-1.5 bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-xs font-medium rounded-lg hover:from-yellow-600 hover:to-orange-600 transition flex items-center"
                       >
-                        ⭐ Review
+                        <Star size={14} className="mr-1" /> Review
                       </Link>
                     )}
                   </div>

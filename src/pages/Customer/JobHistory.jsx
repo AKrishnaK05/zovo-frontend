@@ -1,5 +1,9 @@
 // frontend/src/pages/Customer/JobHistory.jsx
 import { useState, useEffect } from 'react';
+import {
+  Calendar, MapPin, Clock, Search, Filter, RefreshCcw,
+  Map, CheckCircle, AlertCircle, XCircle, User, Phone, Check, Star
+} from 'lucide-react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import {
   Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck, Package, X, Check, Clock, MapPin, Star, Phone, ClipboardList, RefreshCw, User, Tool
@@ -137,7 +141,7 @@ const JobHistory = () => {
               onClick={onClose}
               className="p-2 hover:bg-white/10 rounded-full transition text-gray-400 hover:text-white"
             >
-              ✕
+              <X size={24} />
             </button>
           </div>
 
@@ -176,7 +180,7 @@ const JobHistory = () => {
               {/* Customer (Self) */}
               <div className="panel-card p-5 border border-blue-500/20 bg-blue-500/5">
                 <h3 className="text-blue-400 font-bold mb-3 flex items-center gap-2">
-                  👤 My Details
+                  <User size={18} /> My Details
                 </h3>
                 <div className="space-y-2 text-sm">
                   <p><span className="text-gray-500 block">Notes for Worker</span> <span className="text-white">{job.customerNotes || 'None'}</span></p>
@@ -186,14 +190,14 @@ const JobHistory = () => {
               {/* Worker */}
               <div className="panel-card p-5 border border-purple-500/20 bg-purple-500/5">
                 <h3 className="text-purple-400 font-bold mb-3 flex items-center gap-2">
-                  🔧 Worker Details
+                  <Wrench size={18} /> Worker Details
                 </h3>
                 {job.worker ? (
                   <div className="space-y-2 text-sm">
                     <p><span className="text-gray-500 block">Name</span> <span className="text-white text-lg">{job.worker.name}</span></p>
                     <p><span className="text-gray-500 block">Email</span> <span className="text-white">{job.worker.email}</span></p>
                     <p><span className="text-gray-500 block">Phone</span> <span className="text-white font-mono">{job.worker.phone || 'N/A'}</span></p>
-                    <a href={`tel:${job.worker.phone}`} className="inline-block mt-2 text-purple-400 hover:underline">📞 Call Worker</a>
+                    <a href={`tel:${job.worker.phone}`} className="inline-block mt-2 text-purple-400 hover:underline flex items-center gap-1"><Phone size={14} /> Call Worker</a>
                   </div>
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-gray-500 opacity-60">
@@ -335,7 +339,7 @@ const JobHistory = () => {
           onClick={() => { setLoading(true); fetchJobs(); }}
           className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg flex items-center"
         >
-          <RefreshCw className="mr-2 animate-spin" size={20} />
+          <RefreshCcw size={16} className={`mr-2 ${loading ? 'animate-spin' : ''}`} />
           Refresh
         </button>
       </div>
@@ -343,8 +347,8 @@ const JobHistory = () => {
       {/* Jobs List */}
       {filteredJobs.length === 0 ? (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">
-            {filter === 'needsReview' ? '⭐' : '📋'}
+          <div className="flex justify-center mb-4">
+            {filter === 'needsReview' ? <Star size={64} className="text-yellow-500" /> : <ClipboardList size={64} className="text-gray-600" />}
           </div>
           <h3 className="text-xl font-semibold text-white mb-2">
             {filter === 'needsReview' ? 'All Caught Up!' : 'No Bookings Found'}
@@ -370,128 +374,128 @@ const JobHistory = () => {
               className="panel-card p-6 hover:bg-white/5 transition cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
               onClick={() => setSelectedJob(job)}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  {/* Header */}
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="text-2xl">{getCategoryIcon(job.category)}</span>
-                    <h3 className="text-lg font-semibold text-white">{job.title}</h3>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(job.status)}`}>
-                      {(job.status || 'pending').replace('_', ' ').toUpperCase()}
+              <div className="flex items-start space-x-3">
+                <div className="p-2 bg-gray-700 rounded-lg">
+                  {/* Dynamic icon based on category would be better, but generic for now if not available */}
+                  <CheckCircle className="text-white" size={24} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white flex items-center">
+                    {job.category.charAt(0).toUpperCase() + job.category.slice(1)} Service
+                    <span className={`ml-3 px-2 py-0.5 rounded text-xs font-medium ${getStatusBadge(job.status)}`}>
+                      {job.status.toUpperCase()}
                     </span>
-                    {canReview(job) && (
-                      <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-medium animate-pulse">
-                        <span className="flex items-center gap-1"><Star size={14} /> Review Pending</span>
+                    {job.status === 'completed' && !job.review && (
+                      <span className="ml-2 px-2 py-0.5 rounded text-xs font-medium bg-yellow-500/20 text-yellow-400 flex items-center">
+                        <Star size={10} className="mr-1" /> Review Pending
                       </span>
                     )}
-                  </div>
+                  </h3>
+                  <p className="text-gray-400 text-sm mt-1">{job.title}</p>
 
-                  {/* Description */}
-                  <p className="text-gray-400 text-sm mb-3">{job.description}</p>
-
-                  {/* Details */}
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                    <span className="flex items-center">
-                      <span className="mr-1">📅</span>
-                      {formatDate(job.scheduledDate)}
-                    </span>
-                    {job.timeSlot?.time && (
-                      <span className="flex items-center">
-                        <span className="mr-1">🕐</span>
-                        {job.timeSlot.time}
-                      </span>
-                    )}
-                    <span className="flex items-center">
-                      <span className="mr-1">📍</span>
-                      {job.location?.address || 'No address'}
-                    </span>
+                  <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-400">
+                    <div className="flex items-center">
+                      <Calendar size={14} className="mr-1" />
+                      {new Date(job.scheduledDate).toLocaleDateString()}
+                    </div>
+                    <div className="flex items-center">
+                      <Clock size={14} className="mr-1" />
+                      {job.timeSlot?.time || 'Unscheduled'}
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin size={14} className="mr-1" />
+                      {job.location.address.split(',')[0]}
+                    </div>
                   </div>
 
                   {/* Worker Info */}
                   {job.worker && (
                     <div className="mt-4 flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold">
-                        {job.worker.name?.charAt(0).toUpperCase() || 'W'}
+                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold">
+                        {job.worker.name.charAt(0)}
                       </div>
-                      <div className="flex-1">
+                      <div>
                         <p className="text-white font-medium">{job.worker.name}</p>
-                        <p className="text-gray-500 text-sm">Service Provider</p>
+                        <p className="text-gray-500 text-xs text-left">Service Provider</p>
                       </div>
-                      <div className="flex items-center space-x-2" onClick={(e) => e.stopPropagation()}>
-                        {job.worker.phone && (
-                          <a
-                            href={`tel:${job.worker.phone}`}
-                            className="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm transition"
-                          >
-                            📞 Call
-                          </a>
-                        )}
-                        {/* ⭐ Review Button for Worker */}
-                        {canReview(job) && (
-                          <Link
-                            to={`/customer/review/${job._id}`}
-                            className="px-3 py-1.5 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-medium rounded-lg text-sm transition flex items-center"
-                          >
-                            ⭐ Write Review
-                          </Link>
+                      <div className="flex-1 flex justify-end">
+                        {job.status === 'in_progress' && (
+                          <button className="flex items-center space-x-1 px-3 py-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm">
+                            <Phone size={14} /> <span>Call</span>
+                          </button>
                         )}
                       </div>
                     </div>
                   )}
-                </div>
 
-                {/* Price & Actions */}
-                <div className="ml-6 text-right flex flex-col items-end space-y-3">
-                  {job.estimatedPrice > 0 && (
-                    <div>
-                      <p className="text-gray-500 text-sm">Price</p>
-                      <p className="text-2xl font-bold gradient-text">₹{job.estimatedPrice}</p>
+                  {job.status === 'completed' && job.review && (
+                    <div className="flex items-center text-yellow-500 mt-4">
+                      <span className="font-bold mr-1">{job.review.rating}</span> <Star size={14} fill="currentColor" />
                     </div>
                   )}
 
-                  {/* Cancel Button (Pending Only) */}
-                  {job.status === 'pending' && (
+                  {job.status === 'completed' && !job.review && (
                     <button
-                      onClick={(e) => { e.stopPropagation(); handleCancelJob(job._id); }}
-                      className="px-4 py-2 border border-red-500/50 text-red-400 hover:bg-red-500/10 rounded-lg text-sm transition"
+                      onClick={(e) => { e.stopPropagation(); setSelectedJob(job); }} // Open modal for review
+                      className="flex items-center space-x-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:opacity-90 transition text-sm font-medium shadow-lg shadow-orange-500/20 mt-4"
                     >
-                      Cancel Request
+                      <Star size={16} className="mr-1" fill="currentColor" /> <span>Rate & Review</span>
                     </button>
                   )}
-
-                  {/* Big Review Button for completed jobs */}
-                  {canReview(job) && (
-                    <Link
-                      to={`/customer/review/${job._id}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="px-6 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition flex items-center"
-                    >
-                      <span className="text-xl mr-2">⭐</span>
-                      Rate & Review
-                    </Link>
-                  )}
-
-                  {/* Show Review if exists */}
-                  {job.status === 'completed' && job.review && (
-                    <div className="mt-2 text-left bg-green-500/10 border border-green-500/20 p-3 rounded-xl w-full">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Your Review</span>
-                        <div className="flex text-yellow-400 text-sm">
-                          {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={14} fill="currentColor" className="text-yellow-400" />)}
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-sm italic">"{job.review.comment}"</p>
-                    </div>
-                  )}
-
-                  {/* Show if cancelled */}
-                  {job.status === 'cancelled' && (
-                    <div className="flex items-center text-red-400 text-sm">
-                      <X size={20} />
-                      Cancelled
-                    </div>
-                  )}
                 </div>
+              </div>
+
+              {/* Price & Actions */}
+              <div className="ml-6 text-right flex flex-col items-end space-y-3">
+                {job.estimatedPrice > 0 && (
+                  <div>
+                    <p className="text-gray-500 text-sm">Price</p>
+                    <p className="text-2xl font-bold gradient-text">₹{job.estimatedPrice}</p>
+                  </div>
+                )}
+
+                {/* Cancel Button (Pending Only) */}
+                {job.status === 'pending' && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleCancelJob(job._id); }}
+                    className="px-4 py-2 border border-red-500/50 text-red-400 hover:bg-red-500/10 rounded-lg text-sm transition"
+                  >
+                    Cancel Request
+                  </button>
+                )}
+
+                {/* Big Review Button for completed jobs */}
+                {canReview(job) && (
+                  <Link
+                    to={`/customer/review/${job._id}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="px-6 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition flex items-center"
+                  >
+                    <Star size={20} className="mr-2" fill="currentColor" />
+                    Rate & Review
+                  </Link>
+                )}
+
+                {/* Show Review if exists */}
+                {job.status === 'completed' && job.review && (
+                  <div className="mt-2 text-left bg-green-500/10 border border-green-500/20 p-3 rounded-xl w-full">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Your Review</span>
+                      <div className="flex text-yellow-400 text-sm">
+                        {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={14} fill="currentColor" className="text-yellow-400" />)}
+                      </div>
+                    </div>
+                    <p className="text-gray-300 text-sm italic">"{job.review.comment}"</p>
+                  </div>
+                )}
+
+                {/* Show if cancelled */}
+                {job.status === 'cancelled' && (
+                  <div className="flex items-center text-red-400 text-sm">
+                    <X size={20} />
+                    Cancelled
+                  </div>
+                )}
               </div>
             </div>
           ))}

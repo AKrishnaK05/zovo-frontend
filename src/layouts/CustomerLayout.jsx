@@ -83,7 +83,7 @@ const CustomerLayout = () => {
         <header className="h-20 bg-[#1A1A1A]/90 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-8 z-10">
           <div>
             <h1 className="text-2xl font-bold text-white">
-              Welcome back, {user?.name || 'Customer'} 👋
+              Welcome back, {user?.name || 'Customer'}
             </h1>
             <p className="text-sm text-gray-400">Find the perfect service for you.</p>
           </div>

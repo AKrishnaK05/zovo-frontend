@@ -15,7 +15,7 @@ export const initMap = (el, options = {}) => {
   area.style.alignItems = 'center'
   area.style.justifyContent = 'center'
   area.style.color = '#9CA3AF'
-  area.innerText = 'Map placeholder — integrate Azure Maps SDK here'
+  area.innerText = 'Map placeholder - integrate Azure Maps SDK here'
   el.appendChild(area)
   return {
     setMarker: (lat, lng) => { /* no-op */ },

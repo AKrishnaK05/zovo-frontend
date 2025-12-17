@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 if (!API_URL) {
-  throw new Error("❌ VITE_API_BASE_URL is not defined");
+  throw new Error("[ERROR] VITE_API_BASE_URL is not defined");
 }
 
 const api = axios.create({
@@ -24,8 +24,8 @@ api.interceptors.request.use(
     }
 
     console.log(
-      `📤 ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`,
-      token ? "[Auth: ✓]" : "[Auth: ✗]"
+      `[REQ] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`,
+      token ? "[Auth: YES]" : "[Auth: NO]"
     );
 
     return config;
@@ -48,7 +48,7 @@ api.interceptors.response.use(
 
     if (error.response) {
       console.error(
-        "❌ API Error:",
+        "[ERROR] API Error:",
         error.response.status,
         error.response.data
       );

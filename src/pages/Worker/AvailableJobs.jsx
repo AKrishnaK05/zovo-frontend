@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   MapPin, Calendar, Clock, User, Phone, Check,
-  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Package,
-  Inbox, Loader2
+  Wrench, MapPin, Clock, Calendar, DollarSign, CheckCircle, XCircle, Navigation,
+  ChevronDown, ChevronUp, AlertCircle, User, Phone, FileText, RefreshCcw
 } from 'lucide-react';
 import { useWorker } from '../../context/WorkerContext';
 

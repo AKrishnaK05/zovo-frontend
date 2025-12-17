@@ -147,7 +147,7 @@ const router = createBrowserRouter([
       { path: 'available-jobs', element: <AvailableJobs /> },
       { path: 'my-jobs', element: <MyJobs /> },
       { path: 'earnings', element: <WorkerEarnings /> },
-      { path: 'profile', element: <WorkerProfile /> },  // ✅ Using imported component
+      { path: 'profile', element: <WorkerProfile /> },
     ],
   },
 

@@ -28,7 +28,7 @@ const WriteReview = () => {
 
   const fetchJob = async () => {
     try {
-      const response = await api.get(`/ jobs / ${jobId} `);
+      const response = await api.get(`/jobs/${jobId}`);
       setJob(response.data.data);
     } catch (error) {
       console.error('Failed to fetch job:', error);
@@ -227,8 +227,8 @@ const WriteReview = () => {
               type="button"
               onClick={() => setFormData({ ...formData, wouldRecommend: true })}
               className={`flex - 1 p - 4 rounded - xl border - 2 transition ${formData.wouldRecommend
-                  ? 'border-green-500 bg-green-500/10 text-green-400'
-                  : 'border-gray-700 text-gray-400 hover:border-gray-600'
+                ? 'border-green-500 bg-green-500/10 text-green-400'
+                : 'border-gray-700 text-gray-400 hover:border-gray-600'
                 } `}
             >
               <div className="mb-1 text-green-400">
@@ -240,8 +240,8 @@ const WriteReview = () => {
               type="button"
               onClick={() => setFormData({ ...formData, wouldRecommend: false })}
               className={`flex - 1 p - 4 rounded - xl border - 2 transition ${!formData.wouldRecommend
-                  ? 'border-red-500 bg-red-500/10 text-red-400'
-                  : 'border-gray-700 text-gray-400 hover:border-gray-600'
+                ? 'border-red-500 bg-red-500/10 text-red-400'
+                : 'border-gray-700 text-gray-400 hover:border-gray-600'
                 } `}
             >
               <div className="mb-1 text-red-400">

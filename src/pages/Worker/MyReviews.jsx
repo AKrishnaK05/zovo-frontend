@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Star, Loader2 } from 'lucide-react';
 import api from '../../services/api';
 
 const MyReviews = () => {
@@ -43,7 +44,7 @@ const MyReviews = () => {
     <div className="flex">
       {[1, 2, 3, 4, 5].map((star) => (
         <span key={star} className={star <= rating ? 'text-yellow-400' : 'text-gray-600'}>
-          ★
+          <Star size={16} fill={star <= rating ? "currentColor" : "none"} />
         </span>
       ))}
     </div>
@@ -52,7 +53,7 @@ const MyReviews = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+        <Loader2 className="animate-spin text-purple-500" size={48} />
       </div>
     );
   }
@@ -81,7 +82,7 @@ const MyReviews = () => {
       {/* Reviews List */}
       {reviews.length === 0 ? (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">⭐</div>
+          <div className="flex justify-center mb-4"><Star size={64} className="text-gray-600" /></div>
           <h3 className="text-xl font-semibold text-white mb-2">No Reviews Yet</h3>
           <p className="text-gray-400">Complete jobs to start receiving reviews.</p>
         </div>
