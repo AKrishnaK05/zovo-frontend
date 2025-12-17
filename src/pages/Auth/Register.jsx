@@ -1,6 +1,12 @@
 // frontend/src/pages/Auth/Register.jsx
-import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
+import {
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug,
+  Scissors, Truck, Sprout, Shirt, ChefHat, Shield, Laptop, Smartphone,
+  Car, Camera, BookOpen, Dumbbell, HeartHandshake, Package,
+  User, Eye, EyeOff, AlertTriangle, Check, ArrowRight, Rocket, ChevronLeft
+} from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/zovo_logo.png';
@@ -73,29 +79,29 @@ const Register = () => {
 
   // All service categories
   const SERVICE_CATEGORIES = [
-    { value: 'plumbing', label: 'Plumbing', icon: '🔧', description: 'Pipes, taps, leaks' },
-    { value: 'electrical', label: 'Electrical', icon: '⚡', description: 'Wiring, switches, repairs' },
-    { value: 'cleaning', label: 'Cleaning', icon: '🧹', description: 'Home & office cleaning' },
-    { value: 'painting', label: 'Painting', icon: '🎨', description: 'Interior & exterior' },
-    { value: 'carpentry', label: 'Carpentry', icon: '🪚', description: 'Furniture, woodwork' },
-    { value: 'appliance', label: 'Appliance Repair', icon: '🔌', description: 'Washing machine, fridge' },
-    { value: 'ac-service', label: 'AC Service', icon: '❄️', description: 'Installation & repair' },
-    { value: 'pest-control', label: 'Pest Control', icon: '🦟', description: 'Insects, rodents' },
-    { value: 'salon', label: 'Home Salon', icon: '💇‍♀️', description: 'Beauty services' },
-    { value: 'men-grooming', label: "Men's Grooming", icon: '💇‍♂️', description: 'Haircut, shaving' },
-    { value: 'movers', label: 'Packers & Movers', icon: '🚚', description: 'Relocation services' },
-    { value: 'gardening', label: 'Gardening', icon: '🌱', description: 'Lawn & plant care' },
-    { value: 'laundry', label: 'Laundry', icon: '👔', description: 'Wash, iron, dry clean' },
-    { value: 'cooking', label: 'Cook Services', icon: '👨‍🍳', description: 'Home chef, catering' },
-    { value: 'security', label: 'Security', icon: '🔐', description: 'CCTV, locks, alarms' },
-    { value: 'computer', label: 'Computer Repair', icon: '💻', description: 'PC, laptop services' },
-    { value: 'mobile', label: 'Mobile Repair', icon: '📱', description: 'Phone repairs' },
-    { value: 'car-wash', label: 'Car Wash', icon: '🚗', description: 'Vehicle cleaning' },
-    { value: 'photography', label: 'Photography', icon: '📸', description: 'Events, portraits' },
-    { value: 'tutoring', label: 'Home Tutoring', icon: '📚', description: 'Academic help' },
-    { value: 'fitness', label: 'Fitness Trainer', icon: '💪', description: 'Personal training' },
-    { value: 'massage', label: 'Massage Therapy', icon: '💆', description: 'Relaxation, therapy' },
-    { value: 'other', label: 'Other Services', icon: '📦', description: 'Miscellaneous' }
+    { value: 'plumbing', label: 'Plumbing', icon: <Wrench size={20} />, description: 'Pipes, taps, leaks' },
+    { value: 'electrical', label: 'Electrical', icon: <Zap size={20} />, description: 'Wiring, switches, repairs' },
+    { value: 'cleaning', label: 'Cleaning', icon: <SprayCan size={20} />, description: 'Home & office cleaning' },
+    { value: 'painting', label: 'Painting', icon: <Paintbrush size={20} />, description: 'Interior & exterior' },
+    { value: 'carpentry', label: 'Carpentry', icon: <Hammer size={20} />, description: 'Furniture, woodwork' },
+    { value: 'appliance', label: 'Appliance Repair', icon: <Plug size={20} />, description: 'Washing machine, fridge' },
+    { value: 'ac-service', label: 'AC Service', icon: <Snowflake size={20} />, description: 'Installation & repair' },
+    { value: 'pest-control', label: 'Pest Control', icon: <Bug size={20} />, description: 'Insects, rodents' },
+    { value: 'salon', label: 'Home Salon', icon: <Scissors size={20} />, description: 'Beauty services' },
+    { value: 'men-grooming', label: "Men's Grooming", icon: <Scissors size={20} />, description: 'Haircut, shaving' },
+    { value: 'movers', label: 'Packers & Movers', icon: <Truck size={20} />, description: 'Relocation services' },
+    { value: 'gardening', label: 'Gardening', icon: <Sprout size={20} />, description: 'Lawn & plant care' },
+    { value: 'laundry', label: 'Laundry', icon: <Shirt size={20} />, description: 'Wash, iron, dry clean' },
+    { value: 'cooking', label: 'Cook Services', icon: <ChefHat size={20} />, description: 'Home chef, catering' },
+    { value: 'security', label: 'Security', icon: <Shield size={20} />, description: 'CCTV, locks, alarms' },
+    { value: 'computer', label: 'Computer Repair', icon: <Laptop size={20} />, description: 'PC, laptop services' },
+    { value: 'mobile', label: 'Mobile Repair', icon: <Smartphone size={20} />, description: 'Phone repairs' },
+    { value: 'car-wash', label: 'Car Wash', icon: <Car size={20} />, description: 'Vehicle cleaning' },
+    { value: 'photography', label: 'Photography', icon: <Camera size={20} />, description: 'Events, portraits' },
+    { value: 'tutoring', label: 'Home Tutoring', icon: <BookOpen size={20} />, description: 'Academic help' },
+    { value: 'fitness', label: 'Fitness Trainer', icon: <Dumbbell size={20} />, description: 'Personal training' },
+    { value: 'massage', label: 'Massage Therapy', icon: <HeartHandshake size={20} />, description: 'Relaxation, therapy' },
+    { value: 'other', label: 'Other Services', icon: <Package size={20} />, description: 'Miscellaneous' }
   ];
 
   const handleChange = (e) => {
@@ -223,17 +229,17 @@ const Register = () => {
       {/* Progress Steps */}
       <div className="w-full flex items-center justify-center mb-8 relative z-10">
         <div className="flex items-center">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-md transition-all ${step >= 1 ? 'bg-zovo-blue text-white scale-110' : 'bg-white text-gray-400 border border-gray-200'}`}>
-            {step > 1 ? '✓' : '1'}
+          <div className={`w - 10 h - 10 rounded - full flex items - center justify - center font - bold shadow - md transition - all ${step >= 1 ? 'bg-zovo-blue text-white scale-110' : 'bg-white text-gray-400 border border-gray-200'} `}>
+            {step > 1 ? <Check size={20} /> : '1'}
           </div>
-          <span className={`ml-3 ${step >= 1 ? 'text-gray-900 font-bold' : 'text-gray-400 font-medium'}`}>Account</span>
+          <span className={`ml - 3 ${step >= 1 ? 'text-gray-900 font-bold' : 'text-gray-400 font-medium'} `}>Account</span>
         </div>
-        <div className={`w-16 h-1 mx-4 rounded-full transition-all duration-500 ${step > 1 ? 'bg-zovo-blue' : 'bg-gray-200'}`}></div>
+        <div className={`w - 16 h - 1 mx - 4 rounded - full transition - all duration - 500 ${step > 1 ? 'bg-zovo-blue' : 'bg-gray-200'} `}></div>
         <div className="flex items-center">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-md transition-all ${step >= 2 ? 'bg-zovo-blue text-white scale-110' : 'bg-white text-gray-400 border border-gray-200'}`}>
+          <div className={`w - 10 h - 10 rounded - full flex items - center justify - center font - bold shadow - md transition - all ${step >= 2 ? 'bg-zovo-blue text-white scale-110' : 'bg-white text-gray-400 border border-gray-200'} `}>
             2
           </div>
-          <span className={`ml-3 ${step >= 2 ? 'text-gray-900 font-bold' : 'text-gray-400 font-medium'}`}>Role & Services</span>
+          <span className={`ml - 3 ${step >= 2 ? 'text-gray-900 font-bold' : 'text-gray-400 font-medium'} `}>Role & Services</span>
         </div>
       </div>
 
@@ -242,7 +248,7 @@ const Register = () => {
         {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg flex items-center">
-            <span className="text-red-500 mr-2">⚠️</span>
+            <AlertTriangle className="text-red-500 mr-2" size={20} />
             <span className="text-red-600 text-sm">{error}</span>
           </div>
         )}
@@ -257,24 +263,28 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, role: 'customer', serviceCategories: [] })}
-                className={`w-full p-4 rounded-xl border-2 transition text-center mb-4 ${formData.role === 'customer'
-                  ? 'border-zovo-blue bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300 bg-gray-50'
-                  }`}
+                className={`w - full p - 4 rounded - xl border - 2 transition text - center mb - 4 ${formData.role === 'customer'
+                    ? 'border-zovo-blue bg-blue-50'
+                    : 'border-gray-200 hover:border-gray-300 bg-gray-50'
+                  } `}
               >
-                <div className="text-2xl mb-1">👤</div>
+                <div className="mb-2 text-cyan-400">
+                  <User size={32} />
+                </div>
                 <h3 className="text-gray-900 font-semibold text-sm">Customer</h3>
               </button>
 
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, role: 'worker' })}
-                className={`w-full p-4 rounded-xl border-2 transition text-center ${formData.role === 'worker'
-                  ? 'border-zovo-blue bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300 bg-gray-50'
-                  }`}
+                className={`w - full p - 4 rounded - xl border - 2 transition text - center ${formData.role === 'worker'
+                    ? 'border-zovo-blue bg-blue-50'
+                    : 'border-gray-200 hover:border-gray-300 bg-gray-50'
+                  } `}
               >
-                <div className="text-2xl mb-1">🔧</div>
+                <div className="mb-2 text-purple-400">
+                  <Wrench size={32} />
+                </div>
                 <h3 className="text-gray-900 font-semibold text-sm">Provider</h3>
               </button>
 
@@ -321,7 +331,7 @@ const Register = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition ${googleData ? 'cursor-not-allowed opacity-70' : ''}`}
+                    className={`w - full px - 4 py - 3 bg - white border border - gray - 300 rounded - xl text - gray - 900 placeholder - gray - 400 focus: outline - none focus: border - zovo - blue focus: ring - 1 focus: ring - zovo - blue transition ${googleData ? 'cursor-not-allowed opacity-70' : ''} `}
                     placeholder="Email Address"
                     required
                     disabled={!!googleData}
@@ -364,7 +374,7 @@ const Register = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
-                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
                 <p className="text-gray-500 text-xs mt-1">Minimum 6 characters</p>
@@ -433,7 +443,11 @@ const Register = () => {
                 onClick={handleNext}
                 className="w-full py-3 px-4 bg-zovo-blue hover:bg-blue-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 transition duration-200"
               >
-                {formData.role === 'customer' ? 'Create Account 🚀' : 'Continue →'}
+                {formData.role === 'customer' ? (
+                  <span className="flex items-center gap-2">Create Account <Rocket size={18} /></span>
+                ) : (
+                  <span className="flex items-center gap-2">Continue <ArrowRight size={18} /></span>
+                )}
               </button>
             </div>
           )}
@@ -451,10 +465,10 @@ const Register = () => {
                     key={cat.value}
                     type="button"
                     onClick={() => toggleCategory(cat.value)}
-                    className={`p-3 rounded-xl border-2 transition text-center ${formData.serviceCategories.includes(cat.value)
-                      ? 'border-zovo-blue bg-blue-50 scale-105'
-                      : 'border-gray-200 hover:border-gray-300 bg-gray-50'
-                      }`}
+                    className={`p - 3 rounded - xl border - 2 transition text - center ${formData.serviceCategories.includes(cat.value)
+                        ? 'border-zovo-blue bg-blue-50 scale-105'
+                        : 'border-gray-200 hover:border-gray-300 bg-gray-50'
+                      } `}
                   >
                     <div className="text-2xl mb-1">{cat.icon}</div>
                     <p className="text-gray-900 text-sm font-medium">{cat.label}</p>
@@ -466,7 +480,10 @@ const Register = () => {
               {formData.serviceCategories.length > 0 && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-100 rounded-lg">
                   <p className="text-green-600 text-sm">
-                    ✓ {formData.serviceCategories.length} service{formData.serviceCategories.length > 1 ? 's' : ''} selected
+                    <div className="flex items-center gap-2">
+                      <Check size={20} />
+                      <span>{formData.serviceCategories.length} service{formData.serviceCategories.length > 1 ? 's' : ''} selected</span>
+                    </div>
                   </p>
                 </div>
               )}
@@ -493,7 +510,9 @@ const Register = () => {
                   onClick={() => setStep(1)}
                   className="flex-1 py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-xl transition"
                 >
-                  ← Back
+                  <div className="flex items-center gap-2">
+                    <ChevronLeft size={16} /> Back
+                  </div>
                 </button>
                 <button
                   type="submit"
@@ -508,7 +527,7 @@ const Register = () => {
                   ) : (
                     <>
                       Create Account
-                      <span className="ml-2">🚀</span>
+                      <Rocket className="ml-2" size={20} />
                     </>
                   )}
                 </button>

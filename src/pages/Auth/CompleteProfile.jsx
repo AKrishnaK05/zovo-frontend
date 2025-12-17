@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck, Sprout, Shirt, ChefHat, Shield, Laptop, Smartphone, Car, Camera, BookOpen, Dumbbell, HeartHandshake, Package } from 'lucide-react';
 import api from '../../services/api';
 
 const CompleteProfile = () => {
@@ -27,29 +28,29 @@ const CompleteProfile = () => {
 
     // Service categories (reused from Register)
     const SERVICE_CATEGORIES = [
-        { value: 'plumbing', label: 'Plumbing', icon: '🔧' },
-        { value: 'electrical', label: 'Electrical', icon: '⚡' },
-        { value: 'cleaning', label: 'Cleaning', icon: '🧹' },
-        { value: 'painting', label: 'Painting', icon: '🎨' },
-        { value: 'carpentry', label: 'Carpentry', icon: '🪚' },
-        { value: 'appliance', label: 'Appliance Repair', icon: '🔌' },
-        { value: 'ac-service', label: 'AC Service', icon: '❄️' },
-        { value: 'pest-control', label: 'Pest Control', icon: '🦟' },
-        { value: 'salon', label: 'Home Salon', icon: '💇‍♀️' },
-        { value: 'men-grooming', label: "Men's Grooming", icon: '💇‍♂️' },
-        { value: 'movers', label: 'Packers & Movers', icon: '🚚' },
-        { value: 'gardening', label: 'Gardening', icon: '🌱' },
-        { value: 'laundry', label: 'Laundry', icon: '👔' },
-        { value: 'cooking', label: 'Cook Services', icon: '👨‍🍳' },
-        { value: 'security', label: 'Security', icon: '🔐' },
-        { value: 'computer', label: 'Computer Repair', icon: '💻' },
-        { value: 'mobile', label: 'Mobile Repair', icon: '📱' },
-        { value: 'car-wash', label: 'Car Wash', icon: '🚗' },
-        { value: 'photography', label: 'Photography', icon: '📸' },
-        { value: 'tutoring', label: 'Home Tutoring', icon: '📚' },
-        { value: 'fitness', label: 'Fitness Trainer', icon: '💪' },
-        { value: 'massage', label: 'Massage Therapy', icon: '💆' },
-        { value: 'other', label: 'Other Services', icon: '📦' }
+        { value: 'plumbing', label: 'Plumbing', icon: <Wrench size={20} /> },
+        { value: 'electrical', label: 'Electrical', icon: <Zap size={20} /> },
+        { value: 'cleaning', label: 'Cleaning', icon: <SprayCan size={20} /> },
+        { value: 'painting', label: 'Painting', icon: <Paintbrush size={20} /> },
+        { value: 'carpentry', label: 'Carpentry', icon: <Hammer size={20} /> },
+        { value: 'appliance', label: 'Appliance Repair', icon: <Plug size={20} /> },
+        { value: 'ac-service', label: 'AC Service', icon: <Snowflake size={20} /> },
+        { value: 'pest-control', label: 'Pest Control', icon: <Bug size={20} /> },
+        { value: 'salon', label: 'Home Salon', icon: <Scissors size={20} /> },
+        { value: 'men-grooming', label: "Men's Grooming", icon: <Scissors size={20} /> },
+        { value: 'movers', label: 'Packers & Movers', icon: <Truck size={20} /> },
+        { value: 'gardening', label: 'Gardening', icon: <Sprout size={20} /> },
+        { value: 'laundry', label: 'Laundry', icon: <Shirt size={20} /> },
+        { value: 'cooking', label: 'Cook Services', icon: <ChefHat size={20} /> },
+        { value: 'security', label: 'Security', icon: <Shield size={20} /> },
+        { value: 'computer', label: 'Computer Repair', icon: <Laptop size={20} /> },
+        { value: 'mobile', label: 'Mobile Repair', icon: <Smartphone size={20} /> },
+        { value: 'car-wash', label: 'Car Wash', icon: <Car size={20} /> },
+        { value: 'photography', label: 'Photography', icon: <Camera size={20} /> },
+        { value: 'tutoring', label: 'Home Tutoring', icon: <BookOpen size={20} /> },
+        { value: 'fitness', label: 'Fitness Trainer', icon: <Dumbbell size={20} /> },
+        { value: 'massage', label: 'Massage Therapy', icon: <HeartHandshake size={20} /> },
+        { value: 'other', label: 'Other Services', icon: <Package size={20} /> }
     ];
 
     const handleSubmit = async (e) => {

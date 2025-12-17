@@ -1,5 +1,6 @@
 // frontend/src/pages/Worker/WorkerProfile.jsx
 import { useState, useEffect } from 'react';
+import { Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Package, CircleDot, AlertTriangle, Check } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 
@@ -18,13 +19,13 @@ const WorkerProfile = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
 
   const CATEGORIES = [
-    { value: 'plumbing', label: 'Plumbing', icon: '🔧' },
-    { value: 'electrical', label: 'Electrical', icon: '⚡' },
-    { value: 'cleaning', label: 'Cleaning', icon: '🧹' },
-    { value: 'painting', label: 'Painting', icon: '🎨' },
-    { value: 'carpentry', label: 'Carpentry', icon: '🪚' },
-    { value: 'appliance', label: 'Appliance Repair', icon: '🔌' },
-    { value: 'other', label: 'Other', icon: '📦' }
+    { value: 'plumbing', label: 'Plumbing', icon: <Wrench size={20} /> },
+    { value: 'electrical', label: 'Electrical', icon: <Zap size={20} /> },
+    { value: 'cleaning', label: 'Cleaning', icon: <SprayCan size={20} /> },
+    { value: 'painting', label: 'Painting', icon: <Paintbrush size={20} /> },
+    { value: 'carpentry', label: 'Carpentry', icon: <Hammer size={20} /> },
+    { value: 'appliance', label: 'Appliance Repair', icon: <Plug size={20} /> },
+    { value: 'other', label: 'Other', icon: <Package size={20} /> }
   ];
 
   useEffect(() => {
@@ -100,10 +101,20 @@ const WorkerProfile = () => {
             <p className="text-gray-400">{user?.email}</p>
             <div className="flex items-center space-x-2 mt-2">
               <span className={`px-3 py-1 rounded-full text-sm ${formData.isAvailable
-                  ? 'bg-green-500/20 text-green-400'
-                  : 'bg-red-500/20 text-red-400'
+                ? 'bg-green-500/20 text-green-400'
+                : 'bg-red-500/20 text-red-400'
                 }`}>
-                {formData.isAvailable ? '🟢 Available' : '🔴 Unavailable'}
+                {formData.isAvailable ? (
+                  <div className="flex items-center gap-2 text-green-400">
+                    <CircleDot size={16} className="fill-current" />
+                    <span>Available</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-red-400">
+                    <CircleDot size={16} />
+                    <span>Unavailable</span>
+                  </div>
+                )}
               </span>
               <span className="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm">
                 {formData.serviceCategories.length} Services
@@ -115,8 +126,8 @@ const WorkerProfile = () => {
 
       {message.text && (
         <div className={`mb-6 p-4 rounded-lg ${message.type === 'success'
-            ? 'bg-green-500/10 border border-green-500/20 text-green-400'
-            : 'bg-red-500/10 border border-red-500/20 text-red-400'
+          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+          : 'bg-red-500/10 border border-red-500/20 text-red-400'
           }`}>
           {message.text}
         </div>
@@ -163,7 +174,10 @@ const WorkerProfile = () => {
         <div>
           <h3 className="text-lg font-semibold text-white mb-2">Service Categories</h3>
           <p className="text-gray-400 text-sm mb-4">
-            ⚠️ Select categories to see matching jobs in Available Jobs
+            <div className="flex items-center gap-2">
+              <AlertTriangle size={20} />
+              <span>Select categories to see matching jobs in Available Jobs</span>
+            </div>
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -173,8 +187,8 @@ const WorkerProfile = () => {
                 type="button"
                 onClick={() => toggleCategory(cat.value)}
                 className={`p-4 rounded-lg border-2 transition ${formData.serviceCategories.includes(cat.value)
-                    ? 'border-purple-500 bg-purple-500/20 text-white'
-                    : 'border-gray-700 bg-gray-800/50 text-gray-400 hover:border-gray-600'
+                  ? 'border-purple-500 bg-purple-500/20 text-white'
+                  : 'border-gray-700 bg-gray-800/50 text-gray-400 hover:border-gray-600'
                   }`}
               >
                 <div className="text-2xl mb-1">{cat.icon}</div>
@@ -186,7 +200,10 @@ const WorkerProfile = () => {
           {formData.serviceCategories.length > 0 && (
             <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
               <p className="text-green-400 text-sm">
-                ✓ {formData.serviceCategories.length} selected: {formData.serviceCategories.join(', ')}
+                <div className="flex items-center gap-2">
+                  <Check size={20} />
+                  <span>{formData.serviceCategories.length} selected: {formData.serviceCategories.join(', ')}</span>
+                </div>
               </p>
             </div>
           )}

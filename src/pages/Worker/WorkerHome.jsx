@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Star, Wrench, CheckCircle, ClipboardList, MapPin, Calendar, Tag, Briefcase } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useWorker } from '../../context/WorkerContext';
 
@@ -24,10 +25,10 @@ const WorkerHome = () => {
   const completedJobs = myJobs.filter(j => j.status === 'completed');
 
   const stats = [
-    { label: 'Rating', value: workerStats?.averageRating ? `${workerStats.averageRating.toFixed(1)} ⭐ (${workerStats.totalReviews})` : 'New', icon: '⭐', color: 'from-yellow-500 to-orange-500' },
-    { label: 'Active Jobs', value: activeJobs.length, icon: '🔧', color: 'from-blue-500 to-cyan-500' },
-    { label: 'Completed', value: completedJobs.length, icon: '✅', color: 'from-green-500 to-emerald-500' },
-    { label: 'Available', value: availableJobs.length, icon: '📋', color: 'from-purple-500 to-pink-500' },
+    { label: 'Rating', value: workerStats?.averageRating ? `${workerStats.averageRating.toFixed(1)} (${workerStats.totalReviews})` : 'New', icon: <Star size={20} fill="currentColor" />, color: 'from-yellow-500 to-orange-500' },
+    { label: 'Active Jobs', value: activeJobs.length, icon: <Wrench size={20} />, color: 'from-blue-500 to-cyan-500' },
+    { label: 'Completed', value: completedJobs.length, icon: <CheckCircle size={20} />, color: 'from-green-500 to-emerald-500' },
+    { label: 'Available', value: availableJobs.length, icon: <ClipboardList size={20} />, color: 'from-purple-500 to-pink-500' },
   ];
 
   // ... rest of component ...
@@ -75,7 +76,7 @@ const WorkerHome = () => {
               </p>
             </div>
             <div className="h-12 w-12 rounded-full bg-cyan-500/20 flex items-center justify-center text-2xl">
-              📋
+              <ClipboardList size={24} />
             </div>
           </div>
         </Link>
@@ -92,7 +93,7 @@ const WorkerHome = () => {
               </p>
             </div>
             <div className="h-12 w-12 rounded-full bg-purple-500/20 flex items-center justify-center text-2xl">
-              🔧
+              <Briefcase size={24} />
             </div>
           </div>
         </Link>
@@ -119,9 +120,18 @@ const WorkerHome = () => {
                     <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition">{job.title}</h3>
                     <p className="text-gray-400 mt-1 line-clamp-1">{job.description}</p>
                     <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                      <span>📍 {job.location?.address}</span>
-                      <span>📅 {formatDate(job.scheduledDate)}</span>
-                      <span className="capitalize">🏷️ {job.category}</span>
+                      <div className="flex items-center gap-1">
+                        <MapPin size={14} />
+                        <span>{job.location?.address}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar size={14} />
+                        <span>{formatDate(job.scheduledDate)}</span>
+                      </div>
+                      <div className="flex items-center gap-1 capitalize">
+                        <Tag size={14} />
+                        <span>{job.category}</span>
+                      </div>
                     </div>
                   </div>
                   {job.estimatedPrice > 0 && (

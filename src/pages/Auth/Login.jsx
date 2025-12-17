@@ -1,6 +1,7 @@
 // frontend/src/pages/Auth/Login.jsx
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Eye, EyeOff, AlertTriangle, ArrowRight } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/zovo_logo.png';
@@ -119,7 +120,7 @@ const Login = () => {
         {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg flex items-center">
-            <span className="text-red-500 mr-2">⚠️</span>
+            <AlertTriangle className="text-red-500 mr-2" size={20} />
             <span className="text-red-600 text-sm">{error}</span>
           </div>
         )}
@@ -165,7 +166,7 @@ const Login = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
           </div>
@@ -198,7 +199,7 @@ const Login = () => {
             ) : (
               <>
                 Sign In
-                <span className="ml-2">→</span>
+                <ArrowRight className="ml-2" size={20} />
               </>
             )}
           </button>

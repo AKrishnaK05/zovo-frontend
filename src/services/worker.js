@@ -57,6 +57,12 @@ export const acceptJob = async (jobId) => {
   return response.data;
 };
 
+// Reject a job
+export const rejectJob = async (jobId) => {
+  const response = await api.put(`/jobs/${jobId}/reject`);
+  return response.data;
+};
+
 // Update job status (in_progress, completed, cancelled)
 export const updateJobStatus = async (jobId, status) => {
   const response = await api.put(`/jobs/${jobId}/status`, { status });
@@ -95,6 +101,7 @@ export default {
   getWorkerJobs,
   getAvailableJobs,
   acceptJob,
+  rejectJob,
   updateJobStatus,
   getJobDetails,
   getWorkerStats,

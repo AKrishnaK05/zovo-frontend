@@ -4,6 +4,7 @@ import {
   getWorkerJobs,
   getAvailableJobs,
   acceptJob as acceptJobAPI,
+  rejectJob as rejectJobAPI,
   updateJobStatus as updateJobStatusAPI,
   getWorkerStats
 } from '../services/worker';
@@ -36,7 +37,7 @@ export const WorkerProvider = ({ children }) => {
       ]);
 
       setAvailableJobs(availableResponse.data || []);
-      
+
       // Filter my jobs (assigned to me)
       const allJobs = allJobsResponse.data || [];
       const assigned = allJobs.filter(job => job.worker);
@@ -64,11 +65,11 @@ export const WorkerProvider = ({ children }) => {
   const acceptJob = useCallback(async (jobId) => {
     try {
       const response = await acceptJobAPI(jobId);
-      
+
       // Move job from available to myJobs
       setAvailableJobs(prev => prev.filter(job => job._id !== jobId));
       setMyJobs(prev => [...prev, response.data]);
-      
+
       return { success: true, data: response.data };
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to accept job';
@@ -76,16 +77,36 @@ export const WorkerProvider = ({ children }) => {
     }
   }, []);
 
+  // Reject a job
+  const rejectJob = useCallback(async (jobId) => {
+    try {
+      // Optimistic update: Remove from available jobs immediately
+      setAvailableJobs(prev => prev.filter(job => job._id !== jobId));
+
+      await rejectJobAPI(jobId);
+
+      return { success: true };
+    } catch (err) {
+      console.error('Failed to reject job:', err);
+      // If failure, maybe restore? But for rejection, usually safe to just hide.
+      // Reloading jobs would ensure consistency.
+      loadJobs();
+
+      const message = err.response?.data?.message || 'Failed to reject job';
+      return { success: false, message };
+    }
+  }, [loadJobs]);
+
   // Update job status
   const updateJobStatus = useCallback(async (jobId, status) => {
     try {
       const response = await updateJobStatusAPI(jobId, status);
-      
+
       // Update job in myJobs list
-      setMyJobs(prev => prev.map(job => 
+      setMyJobs(prev => prev.map(job =>
         job._id === jobId ? { ...job, status } : job
       ));
-      
+
       return { success: true, data: response.data };
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to update job status';
@@ -106,7 +127,9 @@ export const WorkerProvider = ({ children }) => {
     error,
     loadJobs,
     loadStats,
+    loadStats,
     acceptJob,
+    rejectJob,
     updateJobStatus,
     refresh
   };

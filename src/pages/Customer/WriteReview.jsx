@@ -1,6 +1,7 @@
 // frontend/src/pages/Customer/WriteReview.jsx
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { PartyPopper, X, ThumbsUp, ThumbsDown, Star, ChevronLeft, Wrench, User } from 'lucide-react';
 import api from '../../services/api';
 
 const WriteReview = () => {
@@ -27,7 +28,7 @@ const WriteReview = () => {
 
   const fetchJob = async () => {
     try {
-      const response = await api.get(`/jobs/${jobId}`);
+      const response = await api.get(`/ jobs / ${jobId} `);
       setJob(response.data.data);
     } catch (error) {
       console.error('Failed to fetch job:', error);
@@ -88,7 +89,9 @@ const WriteReview = () => {
   if (success) {
     return (
       <div className="max-w-lg mx-auto text-center py-12">
-        <div className="text-6xl mb-4">🎉</div>
+        <div className="mb-4 text-yellow-400">
+          <PartyPopper size={64} />
+        </div>
         <h2 className="text-2xl font-bold text-white mb-2">Thank You!</h2>
         <p className="text-gray-400 mb-6">Your review has been submitted successfully.</p>
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500 mx-auto"></div>
@@ -100,7 +103,9 @@ const WriteReview = () => {
   if (!job || !job.worker) {
     return (
       <div className="max-w-lg mx-auto text-center py-12">
-        <div className="text-6xl mb-4">❌</div>
+        <div className="mb-4 text-red-500">
+          <X size={64} />
+        </div>
         <h2 className="text-2xl font-bold text-white mb-2">Cannot Review</h2>
         <p className="text-gray-400 mb-6">This job cannot be reviewed.</p>
         <Link to="/customer/history" className="btn-accent">
@@ -115,7 +120,7 @@ const WriteReview = () => {
       {/* Header */}
       <div className="mb-8">
         <Link to="/customer/history" className="text-gray-400 hover:text-white text-sm mb-4 inline-block">
-          ← Back to Bookings
+          <span className="flex items-center gap-2"><ChevronLeft size={20} /> Back to Bookings</span>
         </Link>
         <h1 className="text-3xl font-bold text-white">Write a Review</h1>
         <p className="text-gray-400 mt-2">Share your experience with the service</p>
@@ -126,7 +131,7 @@ const WriteReview = () => {
         <h3 className="text-lg font-semibold text-white mb-4">Service Details</h3>
         <div className="flex items-start space-x-4">
           <div className="w-16 h-16 rounded-xl bg-gradient-to-r from-purple-500/20 to-cyan-500/20 flex items-center justify-center text-3xl">
-            🔧
+            <Wrench size={40} />
           </div>
           <div className="flex-1">
             <h4 className="text-white font-medium">{job.title}</h4>
@@ -149,7 +154,7 @@ const WriteReview = () => {
             <p className="text-gray-400 text-sm">Service Provider</p>
             {job.worker.averageRating > 0 && (
               <p className="text-yellow-400 text-sm mt-1">
-                ⭐ {job.worker.averageRating.toFixed(1)} ({job.worker.totalReviews} reviews)
+                <span className="flex items-center gap-1"><Star size={14} fill="currentColor" /> {job.worker.averageRating.toFixed(1)} ({job.worker.totalReviews} reviews)</span>
               </p>
             )}
           </div>
@@ -180,7 +185,7 @@ const WriteReview = () => {
                 onClick={() => setFormData({ ...formData, rating: star })}
                 className="text-5xl transition-transform hover:scale-110 focus:outline-none"
               >
-                {star <= (hoveredRating || formData.rating) ? '⭐' : '☆'}
+                {star <= (hoveredRating || formData.rating) ? <Star size={40} fill="currentColor" className="text-yellow-400" /> : <Star size={40} className="text-gray-600" />}
               </button>
             ))}
           </div>
@@ -221,23 +226,27 @@ const WriteReview = () => {
             <button
               type="button"
               onClick={() => setFormData({ ...formData, wouldRecommend: true })}
-              className={`flex-1 p-4 rounded-xl border-2 transition ${formData.wouldRecommend
+              className={`flex - 1 p - 4 rounded - xl border - 2 transition ${formData.wouldRecommend
                   ? 'border-green-500 bg-green-500/10 text-green-400'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
-                }`}
+                } `}
             >
-              <div className="text-2xl mb-1">👍</div>
+              <div className="mb-1 text-green-400">
+                <ThumbsUp size={32} />
+              </div>
               <div className="font-medium">Yes, definitely!</div>
             </button>
             <button
               type="button"
               onClick={() => setFormData({ ...formData, wouldRecommend: false })}
-              className={`flex-1 p-4 rounded-xl border-2 transition ${!formData.wouldRecommend
+              className={`flex - 1 p - 4 rounded - xl border - 2 transition ${!formData.wouldRecommend
                   ? 'border-red-500 bg-red-500/10 text-red-400'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
-                }`}
+                } `}
             >
-              <div className="text-2xl mb-1">👎</div>
+              <div className="mb-1 text-red-400">
+                <ThumbsDown size={32} />
+              </div>
               <div className="font-medium">Not really</div>
             </button>
           </div>
@@ -257,7 +266,7 @@ const WriteReview = () => {
           ) : (
             <>
               Submit Review
-              <span className="ml-2">⭐</span>
+              <Star size={20} className="ml-2" />
             </>
           )}
         </button>

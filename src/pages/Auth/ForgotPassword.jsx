@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Check, AlertTriangle, Lock, ArrowRight, ChevronLeft } from 'lucide-react';
 import logo from '../../assets/zovo_logo.png';
 import api from '../../services/api';
 
@@ -91,15 +92,15 @@ const ForgotPassword = () => {
         {/* Success Message */}
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-100 rounded-lg flex items-start">
-            <span className="text-green-500 mr-2 mt-0.5">✓</span>
-            <p className="text-green-600 text-sm">{success}</p>
+            <Check className="text-green-500 mr-2 mt-0.5" size={20} />
+            <span className="text-green-600 text-sm">{success}</span>
           </div>
         )}
 
         {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg flex items-center">
-            <span className="text-red-500 mr-2">⚠️</span>
+            <AlertTriangle className="text-red-500 mr-2" size={20} />
             <span className="text-red-600 text-sm">{error}</span>
           </div>
         )}
@@ -132,7 +133,7 @@ const ForgotPassword = () => {
                   Checking...
                 </>
               ) : (
-                'Continue →'
+                <span className="flex items-center justify-center gap-2">Continue <ArrowRight size={18} /></span>
               )}
             </button>
           </form>
@@ -166,7 +167,7 @@ const ForgotPassword = () => {
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">New Password</label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">🔒</span>
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
                 <input
                   type="password"
                   name="newPassword"
@@ -188,7 +189,7 @@ const ForgotPassword = () => {
                 onClick={() => setStep(1)}
                 className="flex-1 py-3 px-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-xl transition"
               >
-                ← Back
+                <span className="flex items-center gap-2"><ChevronLeft size={16} /> Back</span>
               </button>
               <button
                 type="submit"

@@ -1,6 +1,9 @@
 // frontend/src/pages/Customer/JobHistory.jsx
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import {
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck, Package, X, Check, Clock, MapPin, Star, Phone, ClipboardList, RefreshCw, User, Tool
+} from 'lucide-react';
 import api from '../../services/api';
 
 const JobHistory = () => {
@@ -55,11 +58,20 @@ const JobHistory = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      plumbing: '🔧', electrical: '⚡', cleaning: '🧹', painting: '🎨',
-      carpentry: '🪚', appliance: '🔌', 'ac-service': '❄️', 'pest-control': '🦟',
-      salon: '💇‍♀️', 'men-grooming': '💇‍♂️', movers: '🚚', other: '📦'
+      plumbing: <Wrench size={20} />,
+      electrical: <Zap size={20} />,
+      cleaning: <SprayCan size={20} />,
+      painting: <Paintbrush size={20} />,
+      carpentry: <Hammer size={20} />,
+      appliance: <Plug size={20} />,
+      'ac-service': <Snowflake size={20} />,
+      'pest-control': <Bug size={20} />,
+      salon: <Scissors size={20} />,
+      'men-grooming': <Scissors size={20} />,
+      movers: <Truck size={20} />,
+      other: <Package size={20} />
     };
-    return icons[category] || '📦';
+    return icons[category] || <Package size={20} />;
   };
 
   const formatDate = (date) => {
@@ -77,7 +89,7 @@ const JobHistory = () => {
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;
 
     try {
-      await api.put(`/jobs/${jobId}/cancel`);
+      await api.put(`/ jobs / ${jobId}/cancel`);
 
       // Update local state to reflect cancellation
       setJobs(prevJobs =>
@@ -140,7 +152,7 @@ const JobHistory = () => {
                 </span>
                 <div className="h-6 w-px bg-white/10"></div>
                 <div className="flex items-center gap-2 text-gray-300">
-                  <span>📅 Scheduled:</span>
+                  <span className="flex items-center gap-1"><Clock size={16} /> Scheduled:</span>
                   <span className="text-white font-medium">{formatDate(job.scheduledDate)}</span>
                   {job.timeSlot?.time && <span className="text-purple-400">({job.timeSlot.time})</span>}
                 </div>
@@ -153,7 +165,7 @@ const JobHistory = () => {
 
             {/* Description */}
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2">📝 Description</h3>
+              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2"><ClipboardList size={20} /> Description</h3>
               <p className="text-gray-300 bg-black/20 p-4 rounded-lg border border-white/5 leading-relaxed">
                 {job.description || 'No description provided.'}
               </p>
@@ -185,7 +197,7 @@ const JobHistory = () => {
                   </div>
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-gray-500 opacity-60">
-                    <span className="text-4xl mb-2">⏳</span>
+                    <Clock className="text-gray-400 mb-2" size={40} />
                     <p>No worker assigned yet</p>
                   </div>
                 )}
@@ -194,7 +206,7 @@ const JobHistory = () => {
 
             {/* Location */}
             <div>
-              <h3 className="text-lg font-semibold text-white mb-3">📍 Service Location</h3>
+              <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2"><MapPin size={20} /> Service Location</h3>
               <div className="bg-gray-800 p-4 rounded-xl border border-gray-700 flex justify-between items-start gap-4">
                 <div>
                   <p className="text-white text-lg">{job.location?.address}</p>
@@ -206,7 +218,7 @@ const JobHistory = () => {
                   rel="noopener noreferrer"
                   className="btn-secondary whitespace-nowrap"
                 >
-                  🗺️ Open Map
+                  <span className="flex items-center gap-2"><MapPin size={16} /> Open Map</span>
                 </a>
               </div>
             </div>
@@ -214,10 +226,10 @@ const JobHistory = () => {
             {/* Review If Exists */}
             {job.review && (
               <div>
-                <h3 className="text-lg font-semibold text-white mb-3">⭐ Your Review</h3>
+                <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2"><Star size={20} /> Your Review</h3>
                 <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-xl">
                   <div className="flex text-yellow-400 mb-2">
-                    {Array(job.review.rating).fill('⭐').join('')}
+                    {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={16} fill="currentColor" className="text-yellow-400" />)}
                   </div>
                   <p className="text-gray-300 italic">"{job.review.comment}"</p>
                   <p className="text-xs text-gray-500 mt-2">Submitted on {new Date(job.review.createdAt).toLocaleDateString()}</p>
@@ -282,7 +294,7 @@ const JobHistory = () => {
           onClick={() => setFilter('needsReview')}
         >
           <p className="text-2xl font-bold text-yellow-400">{reviewCount}</p>
-          <p className="text-gray-500 text-sm">Needs Review ⭐</p>
+          <p className="text-gray-500 text-sm flex items-center gap-1">Needs Review <Star size={12} /></p>
         </div>
       </div>
 
@@ -290,7 +302,7 @@ const JobHistory = () => {
       <div className="flex flex-wrap gap-2 mb-6">
         {[
           { key: 'all', label: 'All' },
-          { key: 'needsReview', label: '⭐ Needs Review' },
+          { key: 'needsReview', label: 'Needs Review', icon: <Star size={16} /> },
           { key: 'pending', label: 'Pending' },
           { key: 'accepted', label: 'Accepted' },
           { key: 'in_progress', label: 'In Progress' },
@@ -323,7 +335,7 @@ const JobHistory = () => {
           onClick={() => { setLoading(true); fetchJobs(); }}
           className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg flex items-center"
         >
-          <span className="mr-2">🔄</span>
+          <RefreshCw className="mr-2 animate-spin" size={20} />
           Refresh
         </button>
       </div>
@@ -369,7 +381,7 @@ const JobHistory = () => {
                     </span>
                     {canReview(job) && (
                       <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-medium animate-pulse">
-                        ⭐ Review Pending
+                        <span className="flex items-center gap-1"><Star size={14} /> Review Pending</span>
                       </span>
                     )}
                   </div>
@@ -465,7 +477,7 @@ const JobHistory = () => {
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Your Review</span>
                         <div className="flex text-yellow-400 text-sm">
-                          {Array(job.review.rating).fill('⭐').join('')}
+                          {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={14} fill="currentColor" className="text-yellow-400" />)}
                         </div>
                       </div>
                       <p className="text-gray-300 text-sm italic">"{job.review.comment}"</p>
@@ -475,7 +487,7 @@ const JobHistory = () => {
                   {/* Show if cancelled */}
                   {job.status === 'cancelled' && (
                     <div className="flex items-center text-red-400 text-sm">
-                      <span className="mr-1">⨯</span>
+                      <X size={20} />
                       Cancelled
                     </div>
                   )}

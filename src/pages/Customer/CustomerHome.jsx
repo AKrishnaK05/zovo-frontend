@@ -1,8 +1,12 @@
 // frontend/src/pages/Customer/CustomerHome.jsx
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
+import {
+  ClipboardList, Wrench, Clock, CheckCircle, MapPin, Calendar, Tag, Star,
+  Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck, Sprout, Shirt, ChefHat, Shield, Laptop, Smartphone, Car, Camera, BookOpen, Dumbbell, HeartHandshake, Package
+} from 'lucide-react';
 
 const CustomerHome = () => {
   const { user } = useAuth();
@@ -32,11 +36,20 @@ const CustomerHome = () => {
   // Get category icon
   const getCategoryIcon = (category) => {
     const icons = {
-      plumbing: '🔧', electrical: '⚡', cleaning: '🧹', painting: '🎨',
-      carpentry: '🪚', appliance: '🔌', 'ac-service': '❄️', 'pest-control': '🦟',
-      salon: '💇‍♀️', 'men-grooming': '💇‍♂️', movers: '🚚', other: '📦'
+      plumbing: <Wrench size={20} />,
+      electrical: <Zap size={20} />,
+      cleaning: <SprayCan size={20} />,
+      painting: <Paintbrush size={20} />,
+      carpentry: <Hammer size={20} />,
+      appliance: <Plug size={20} />,
+      'ac-service': <Snowflake size={20} />,
+      'pest-control': <Bug size={20} />,
+      salon: <Scissors size={20} />,
+      'men-grooming': <Scissors size={20} />,
+      movers: <Truck size={20} />,
+      other: <Package size={20} />
     };
-    return icons[category] || '📦';
+    return icons[category] || <Package size={20} />;
   };
 
   if (loading) {
@@ -68,7 +81,7 @@ const CustomerHome = () => {
               <p className="text-3xl font-bold text-white mt-1">{jobs.length}</p>
             </div>
             <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-xl">
-              📋
+              <ClipboardList size={24} />
             </div>
           </div>
         </div>
@@ -82,7 +95,7 @@ const CustomerHome = () => {
               </p>
             </div>
             <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xl">
-              🔧
+              <Wrench size={24} />
             </div>
           </div>
         </div>
@@ -96,7 +109,7 @@ const CustomerHome = () => {
               </p>
             </div>
             <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center text-xl">
-              ⏳
+              <Clock size={24} />
             </div>
           </div>
         </div>
@@ -110,13 +123,13 @@ const CustomerHome = () => {
               </p>
             </div>
             <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-xl">
-              ✅
+              <CheckCircle size={24} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* 🌟 Pending Reviews Alert */}
+      {/* Pending Reviews Alert */}
       {jobsNeedingReview.length > 0 && (
         <div className="mb-8 p-4 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-xl">
           <div className="flex items-center justify-between">

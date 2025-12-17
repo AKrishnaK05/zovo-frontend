@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Package, Lightbulb, Check, Loader2 } from 'lucide-react';
 import api from '../../services/api';
 
 const WorkerServices = () => {
@@ -9,13 +10,13 @@ const WorkerServices = () => {
   const [error, setError] = useState('');
 
   const categories = [
-    { value: 'plumbing', label: 'Plumbing', icon: '🔧', description: 'Pipe repairs, installations, leak fixes' },
-    { value: 'electrical', label: 'Electrical', icon: '⚡', description: 'Wiring, outlets, electrical repairs' },
-    { value: 'cleaning', label: 'Cleaning', icon: '🧹', description: 'Home and office cleaning services' },
-    { value: 'painting', label: 'Painting', icon: '🎨', description: 'Interior and exterior painting' },
-    { value: 'carpentry', label: 'Carpentry', icon: '🪚', description: 'Wood work, furniture, repairs' },
-    { value: 'appliance', label: 'Appliance Repair', icon: '🔌', description: 'Home appliance repairs' },
-    { value: 'other', label: 'Other Services', icon: '📦', description: 'Other handyman services' }
+    { value: 'plumbing', label: 'Plumbing', icon: <Wrench size={36} />, description: 'Pipe repairs, installations, leak fixes' },
+    { value: 'electrical', label: 'Electrical', icon: <Zap size={36} />, description: 'Wiring, outlets, electrical repairs' },
+    { value: 'cleaning', label: 'Cleaning', icon: <SprayCan size={36} />, description: 'Home and office cleaning services' },
+    { value: 'painting', label: 'Painting', icon: <Paintbrush size={36} />, description: 'Interior and exterior painting' },
+    { value: 'carpentry', label: 'Carpentry', icon: <Hammer size={36} />, description: 'Wood work, furniture, repairs' },
+    { value: 'appliance', label: 'Appliance Repair', icon: <Plug size={36} />, description: 'Home appliance repairs' },
+    { value: 'other', label: 'Other Services', icon: <Package size={36} />, description: 'Other handyman services' }
   ];
 
   useEffect(() => {
@@ -96,7 +97,9 @@ const WorkerServices = () => {
       {/* Info Box */}
       <div className="panel-card p-6 mb-6 border border-cyan-500/30 bg-cyan-500/5">
         <div className="flex items-start space-x-3">
-          <span className="text-2xl">💡</span>
+          <span className="text-2xl text-yellow-400">
+            <Lightbulb size={24} />
+          </span>
           <div>
             <h3 className="text-white font-medium mb-1">How it works</h3>
             <p className="text-gray-400 text-sm">
@@ -112,25 +115,25 @@ const WorkerServices = () => {
           <div
             key={cat.value}
             onClick={() => toggleCategory(cat.value)}
-            className={`panel-card p-6 cursor-pointer transition-all ${
-              selectedCategories.includes(cat.value)
+            className={`panel-card p-6 cursor-pointer transition-all ${selectedCategories.includes(cat.value)
                 ? 'border-2 border-purple-500 bg-purple-500/10'
                 : 'hover:bg-white/5'
-            }`}
+              }`}
           >
             <div className="flex items-start space-x-4">
-              <div className={`text-4xl p-3 rounded-lg ${
-                selectedCategories.includes(cat.value)
+              <div className={`text-4xl p-3 rounded-lg ${selectedCategories.includes(cat.value)
                   ? 'bg-purple-500/20'
                   : 'bg-gray-800'
-              }`}>
+                }`}>
                 {cat.icon}
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-white">{cat.label}</h3>
                   {selectedCategories.includes(cat.value) && (
-                    <span className="text-purple-400 text-xl">✓</span>
+                    <span className="text-purple-400">
+                      <Check size={20} />
+                    </span>
                   )}
                 </div>
                 <p className="text-gray-400 text-sm mt-1">{cat.description}</p>
@@ -164,10 +167,7 @@ const WorkerServices = () => {
       >
         {saving ? (
           <>
-            <svg className="animate-spin -ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+            <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />
             Saving...
           </>
         ) : (

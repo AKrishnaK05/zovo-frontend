@@ -4,9 +4,10 @@ import { useLocation } from 'react-router-dom';
 import { useWorker } from '../../context/WorkerContext';
 
 const AvailableJobs = () => {
-  const { availableJobs, loading, error, loadJobs, acceptJob } = useWorker();
+  const { availableJobs, loading, error, loadJobs, acceptJob, rejectJob } = useWorker();
   const location = useLocation();
   const [acceptingId, setAcceptingId] = useState(null);
+  const [rejectingId, setRejectingId] = useState(null);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -43,6 +44,26 @@ const AvailableJobs = () => {
     }
 
     setAcceptingId(null);
+  };
+
+  const handleReject = async (jobId) => {
+    if (!window.confirm('Are you sure you want to decline this job? It will be offered to another worker.')) {
+      return;
+    }
+
+    setRejectingId(jobId);
+    setMessage({ type: '', text: '' });
+
+    const result = await rejectJob(jobId);
+
+    if (result.success) {
+      setMessage({ type: 'success', text: 'Job declined.' });
+      if (selectedJob?._id === jobId) setSelectedJob(null);
+    } else {
+      setMessage({ type: 'error', text: result.message });
+    }
+
+    setRejectingId(null);
   };
 
   const formatDate = (date) => {
@@ -222,6 +243,15 @@ const AvailableJobs = () => {
                         Accept Job
                       </>
                     )}
+                  </button>
+
+                  {/* Reject Button */}
+                  <button
+                    onClick={() => handleReject(job._id)}
+                    disabled={acceptingId === job._id || rejectingId === job._id}
+                    className="mt-2 w-full px-6 py-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 rounded-xl transition font-medium text-sm"
+                  >
+                    {rejectingId === job._id ? 'Declining...' : 'Decline Offer'}
                   </button>
 
                   {/* View Details */}
