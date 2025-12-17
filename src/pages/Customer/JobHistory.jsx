@@ -1,13 +1,11 @@
 // frontend/src/pages/Customer/JobHistory.jsx
 import { useState, useEffect } from 'react';
 import {
-  Calendar, MapPin, Clock, Search, Filter, RefreshCcw,
-  Map, CheckCircle, AlertCircle, XCircle, User, Phone, Check, Star
+  Calendar, MapPin, Clock, CheckCircle, XCircle, AlertTriangle, ChevronRight, Star,
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck,
+  Package, X, Check, Phone, ClipboardList, RefreshCw, User, Tool
 } from 'lucide-react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import {
-  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Snowflake, Bug, Scissors, Truck, Package, X, Check, Clock, MapPin, Star, Phone, ClipboardList, RefreshCw, User, Tool
-} from 'lucide-react';
 import api from '../../services/api';
 
 const JobHistory = () => {
@@ -93,7 +91,7 @@ const JobHistory = () => {
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;
 
     try {
-      await api.put(`/ jobs / ${jobId}/cancel`);
+      await api.put(`/jobs/${jobId}/cancel`);
 
       // Update local state to reflect cancellation
       setJobs(prevJobs =>

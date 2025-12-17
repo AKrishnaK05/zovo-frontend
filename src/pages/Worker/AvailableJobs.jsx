@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  MapPin, Calendar, Clock, User, Phone, Check,
-  Wrench, MapPin, Clock, Calendar, DollarSign, CheckCircle, XCircle, Navigation,
-  ChevronDown, ChevronUp, AlertCircle, User, Phone, FileText, RefreshCcw
+  MapPin, Calendar, Clock, User, Phone, Check, Wrench, DollarSign,
+  CheckCircle, XCircle, Navigation, ChevronDown, ChevronUp, AlertCircle, FileText,
+  RefreshCcw, Inbox, Zap, SprayCan, Paintbrush, Hammer, Plug, Package
 } from 'lucide-react';
 import { useWorker } from '../../context/WorkerContext';
 
