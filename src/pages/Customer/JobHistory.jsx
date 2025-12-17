@@ -144,63 +144,62 @@ const JobHistory = () => {
           </div>
 
           {/* Modal Content */}
-          <div className="p-8 space-y-8">
+          <div className="p-6 space-y-6">
 
             {/* Status & Price Banner */}
-            <div className="flex flex-wrap gap-4 items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
-              <div className="flex items-center gap-4">
-                <span className={`px-4 py-2 rounded-full text-sm font-bold border ${getStatusBadge(job.status).replace('bg-', 'border-').replace('/20', '')}`}>
+            <div className="flex flex-wrap gap-3 items-center justify-between p-3 bg-white/5 rounded-xl border border-white/10">
+              <div className="flex items-center gap-3">
+                <span className={`px-4 py-1.5 rounded-full text-sm font-bold border ${getStatusBadge(job.status).replace('bg-', 'border-').replace('/20', '')}`}>
                   {job.status?.toUpperCase().replace('_', ' ')}
                 </span>
-                <div className="h-6 w-px bg-white/10"></div>
-                <div className="flex items-center gap-2 text-gray-300">
-                  <span className="flex items-center gap-1"><Clock size={16} /> Scheduled:</span>
+                <div className="h-5 w-px bg-white/10"></div>
+                <div className="flex items-center gap-2 text-gray-300 text-sm">
+                  <span className="flex items-center gap-1"><Clock size={15} /> Scheduled:</span>
                   <span className="text-white font-medium">{formatDate(job.scheduledDate)}</span>
                   {job.timeSlot?.time && <span className="text-purple-400">({job.timeSlot.time})</span>}
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-sm text-gray-400">Estimated Price</p>
-                <p className="text-2xl font-bold gradient-text">₹{job.estimatedPrice || 0}</p>
+                <p className="text-xs text-gray-500">Estimated Price</p>
+                <p className="text-xl font-bold gradient-text">₹{job.estimatedPrice || 0}</p>
               </div>
             </div>
 
             {/* Description */}
             <div>
-              <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2"><ClipboardList size={20} /> Description</h3>
-              <p className="text-gray-300 bg-black/20 p-4 rounded-lg border border-white/5 leading-relaxed">
+              <h3 className="text-base font-semibold text-white mb-2 flex items-center gap-2"><ClipboardList size={18} /> Description</h3>
+              <p className="text-gray-300 bg-black/20 p-3 rounded-lg border border-white/5 leading-relaxed text-sm">
                 {job.description || 'No description provided.'}
               </p>
             </div>
 
             {/* People Involved */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Customer (Self) */}
-              <div className="panel-card p-5 border border-blue-500/20 bg-blue-500/5">
-                <h3 className="text-blue-400 font-bold mb-3 flex items-center gap-2">
-                  <User size={18} /> My Details
+              <div className="panel-card p-4 border border-blue-500/20 bg-blue-500/5">
+                <h3 className="text-blue-400 font-bold mb-2 flex items-center gap-2 text-sm">
+                  <User size={16} /> My Details
                 </h3>
-                <div className="space-y-2 text-sm">
-                  <p><span className="text-gray-500 block">Notes for Worker</span> <span className="text-white">{job.customerNotes || 'None'}</span></p>
+                <div className="space-y-1 text-sm">
+                  <p><span className="text-gray-500 block text-xs">Notes for Worker</span> <span className="text-white">{job.customerNotes || 'None'}</span></p>
                 </div>
               </div>
 
               {/* Worker */}
-              <div className="panel-card p-5 border border-purple-500/20 bg-purple-500/5">
-                <h3 className="text-purple-400 font-bold mb-3 flex items-center gap-2">
-                  <Wrench size={18} /> Worker Details
+              <div className="panel-card p-4 border border-purple-500/20 bg-purple-500/5">
+                <h3 className="text-purple-400 font-bold mb-2 flex items-center gap-2 text-sm">
+                  <Wrench size={16} /> Worker Details
                 </h3>
                 {job.worker ? (
-                  <div className="space-y-2 text-sm">
-                    <p><span className="text-gray-500 block">Name</span> <span className="text-white text-lg">{job.worker.name}</span></p>
-                    <p><span className="text-gray-500 block">Email</span> <span className="text-white">{job.worker.email}</span></p>
-                    <p><span className="text-gray-500 block">Phone</span> <span className="text-white font-mono">{job.worker.phone || 'N/A'}</span></p>
-                    <a href={`tel:${job.worker.phone}`} className="inline-block mt-2 text-purple-400 hover:underline flex items-center gap-1"><Phone size={14} /> Call Worker</a>
+                  <div className="space-y-1 text-sm">
+                    <p><span className="text-gray-500 block text-xs">Name</span> <span className="text-white font-medium">{job.worker.name}</span></p>
+                    <p><span className="text-gray-500 block text-xs">Phone</span> <span className="text-white font-mono">{job.worker.phone || 'N/A'}</span></p>
+                    <a href={`tel:${job.worker.phone}`} className="inline-block mt-1 text-purple-400 hover:underline flex items-center gap-1 text-xs"><Phone size={12} /> Call Worker</a>
                   </div>
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-gray-500 opacity-60">
-                    <Clock className="text-gray-400 mb-2" size={40} />
-                    <p>No worker assigned yet</p>
+                    <Clock className="text-gray-400 mb-1" size={24} />
+                    <p className="text-xs">No worker assigned</p>
                   </div>
                 )}
               </div>
@@ -208,19 +207,19 @@ const JobHistory = () => {
 
             {/* Location */}
             <div>
-              <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2"><MapPin size={20} /> Service Location</h3>
-              <div className="bg-gray-800 p-4 rounded-xl border border-gray-700 flex justify-between items-start gap-4">
+              <h3 className="text-base font-semibold text-white mb-2 flex items-center gap-2"><MapPin size={18} /> Service Location</h3>
+              <div className="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-start gap-4">
                 <div>
-                  <p className="text-white text-lg">{job.location?.address}</p>
-                  {job.location?.city && <p className="text-gray-400">{job.location.city}</p>}
+                  <p className="text-white">{job.location?.address}</p>
+                  {job.location?.city && <p className="text-gray-400 text-sm">{job.location.city}</p>}
                 </div>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location?.address || '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-secondary whitespace-nowrap"
+                  className="btn-secondary whitespace-nowrap py-1.5 px-3 text-xs"
                 >
-                  <span className="flex items-center gap-2"><MapPin size={16} /> Open Map</span>
+                  <span className="flex items-center gap-1.5"><MapPin size={14} /> Open Map</span>
                 </a>
               </div>
             </div>
@@ -228,21 +227,20 @@ const JobHistory = () => {
             {/* Review If Exists */}
             {job.review && (
               <div>
-                <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2"><Star size={20} /> Your Review</h3>
-                <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-xl">
-                  <div className="flex text-yellow-400 mb-2">
-                    {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={16} fill="currentColor" className="text-yellow-400" />)}
+                <h3 className="text-base font-semibold text-white mb-2 flex items-center gap-2"><Star size={18} /> Your Review</h3>
+                <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-xl">
+                  <div className="flex text-yellow-400 mb-1">
+                    {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={14} fill="currentColor" className="text-yellow-400" />)}
                   </div>
-                  <p className="text-gray-300 italic">"{job.review.comment}"</p>
-                  <p className="text-xs text-gray-500 mt-2">Submitted on {new Date(job.review.createdAt).toLocaleDateString()}</p>
+                  <p className="text-gray-300 italic text-sm">"{job.review.comment}"</p>
+                  <p className="text-xs text-gray-500 mt-1">Submitted on {new Date(job.review.createdAt).toLocaleDateString()}</p>
                 </div>
               </div>
             )}
 
             {/* Footer Actions */}
-            <div className="flex justify-end pt-4 border-t border-white/10 gap-3">
-              <button onClick={onClose} className="btn-secondary">Close</button>
-              {/* Can add more actions like 'Cancel' later if needed */}
+            <div className="flex justify-end pt-3 border-t border-white/10 gap-3">
+              <button onClick={onClose} className="btn-secondary py-1.5 px-4 text-sm">Close</button>
             </div>
 
           </div>
@@ -369,131 +367,107 @@ const JobHistory = () => {
           {filteredJobs.map((job) => (
             <div
               key={job._id}
-              className="panel-card p-6 hover:bg-white/5 transition cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+              className="panel-card p-5 hover:bg-white/5 transition cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
               onClick={() => setSelectedJob(job)}
             >
-              <div className="flex items-start space-x-3">
-                <div className="p-2 bg-gray-700 rounded-lg">
-                  {/* Dynamic icon based on category would be better, but generic for now if not available */}
-                  <CheckCircle className="text-white" size={24} />
+              <div className="flex items-start space-x-4">
+                <div className="p-2 bg-gray-700/50 rounded-lg shrink-0">
+                  <CheckCircle className="text-white" size={20} />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white flex items-center">
-                    {job.category.charAt(0).toUpperCase() + job.category.slice(1)} Service
-                    <span className={`ml-3 px-2 py-0.5 rounded text-xs font-medium ${getStatusBadge(job.status)}`}>
-                      {job.status.toUpperCase()}
-                    </span>
-                    {job.status === 'completed' && !job.review && (
-                      <span className="ml-2 px-2 py-0.5 rounded text-xs font-medium bg-yellow-500/20 text-yellow-400 flex items-center">
-                        <Star size={10} className="mr-1" /> Review Pending
-                      </span>
-                    )}
-                  </h3>
-                  <p className="text-gray-400 text-sm mt-1">{job.title}</p>
 
-                  <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-400">
-                    <div className="flex items-center">
-                      <Calendar size={14} className="mr-1" />
-                      {new Date(job.scheduledDate).toLocaleDateString()}
+                <div className="flex-grow min-w-0">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                        {job.category.charAt(0).toUpperCase() + job.category.slice(1)} Service
+                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${getStatusBadge(job.status)}`}>
+                          {job.status.toUpperCase()}
+                        </span>
+                      </h3>
+                      <p className="text-gray-400 text-sm mt-0.5 truncate">{job.title}</p>
                     </div>
-                    <div className="flex items-center">
-                      <Clock size={14} className="mr-1" />
-                      {job.timeSlot?.time || 'Unscheduled'}
-                    </div>
-                    <div className="flex items-center">
-                      <MapPin size={14} className="mr-1" />
-                      {job.location.address.split(',')[0]}
-                    </div>
-                  </div>
 
-                  {/* Worker Info */}
-                  {job.worker && (
-                    <div className="mt-4 flex items-center space-x-3 p-3 bg-gray-800/50 rounded-lg">
-                      <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold">
-                        {job.worker.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-white font-medium">{job.worker.name}</p>
-                        <p className="text-gray-500 text-xs text-left">Service Provider</p>
-                      </div>
-                      <div className="flex-1 flex justify-end">
-                        {job.status === 'in_progress' && (
-                          <button className="flex items-center space-x-1 px-3 py-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm">
-                            <Phone size={14} /> <span>Call</span>
+                    <div className="text-right shrink-0 ml-4">
+                      {job.estimatedPrice > 0 && (
+                        <div className="mb-2">
+                          <p className="text-xl font-bold gradient-text">₹{job.estimatedPrice}</p>
+                        </div>
+                      )}
+
+                      {/* Actions */}
+                      <div className="flex flex-col gap-2 items-end">
+                        {job.status === 'pending' && (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleCancelJob(job._id); }}
+                            className="px-3 py-1.5 border border-red-500/50 text-red-400 hover:bg-red-500/10 rounded-lg text-xs transition"
+                          >
+                            Cancel
                           </button>
+                        )}
+
+                        {canReview(job) && (
+                          <Link
+                            to={`/customer/review/${job._id}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="px-4 py-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition flex items-center"
+                          >
+                            <Star size={16} className="mr-1.5" fill="currentColor" />
+                            Rate & Review
+                          </Link>
                         )}
                       </div>
                     </div>
-                  )}
+                  </div>
 
-                  {job.status === 'completed' && job.review && (
-                    <div className="flex items-center text-yellow-500 mt-4">
-                      <span className="font-bold mr-1">{job.review.rating}</span> <Star size={14} fill="currentColor" />
+                  <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3 text-sm text-gray-400">
+                    <div className="flex items-center">
+                      <Calendar size={14} className="mr-1.5 text-gray-500" />
+                      {new Date(job.scheduledDate).toLocaleDateString()}
+                    </div>
+                    <div className="flex items-center">
+                      <Clock size={14} className="mr-1.5 text-gray-500" />
+                      {job.timeSlot?.time || 'Unscheduled'}
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin size={14} className="mr-1.5 text-gray-500" />
+                      <span className="truncate max-w-[200px]">{job.location.address.split(',')[0]}</span>
+                    </div>
+                  </div>
+
+                  {/* Worker Info - Compact */}
+                  {job.worker && (
+                    <div className="mt-3 flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white font-bold">
+                        {job.worker.name.charAt(0)}
+                      </div>
+                      <p className="text-gray-300 text-sm flex items-center gap-2">
+                        {job.worker.name}
+                        {job.status === 'in_progress' && (
+                          <button onClick={(e) => e.stopPropagation()} className="text-green-400 hover:text-green-300">
+                            <Phone size={14} />
+                          </button>
+                        )}
+                      </p>
                     </div>
                   )}
 
-                  {job.status === 'completed' && !job.review && (
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setSelectedJob(job); }} // Open modal for review
-                      className="flex items-center space-x-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:opacity-90 transition text-sm font-medium shadow-lg shadow-orange-500/20 mt-4"
-                    >
-                      <Star size={16} className="mr-1" fill="currentColor" /> <span>Rate & Review</span>
-                    </button>
+                  {/* Compact Review Display */}
+                  {job.status === 'completed' && job.review && (
+                    <div className="mt-3 pt-3 border-t border-white/5 flex items-start gap-3">
+                      <div className="flex text-yellow-400 shrink-0 mt-0.5">
+                        <span className="font-bold text-sm mr-1">{job.review.rating}</span>
+                        <Star size={14} fill="currentColor" />
+                      </div>
+                      <p className="text-gray-400 text-sm italic line-clamp-1">"{job.review.comment}"</p>
+                    </div>
+                  )}
+
+                  {job.status === 'cancelled' && (
+                    <p className="mt-2 text-red-400 text-xs flex items-center gap-1">
+                      <X size={14} /> Cancelled
+                    </p>
                   )}
                 </div>
-              </div>
-
-              {/* Price & Actions */}
-              <div className="ml-6 text-right flex flex-col items-end space-y-3">
-                {job.estimatedPrice > 0 && (
-                  <div>
-                    <p className="text-gray-500 text-sm">Price</p>
-                    <p className="text-2xl font-bold gradient-text">₹{job.estimatedPrice}</p>
-                  </div>
-                )}
-
-                {/* Cancel Button (Pending Only) */}
-                {job.status === 'pending' && (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); handleCancelJob(job._id); }}
-                    className="px-4 py-2 border border-red-500/50 text-red-400 hover:bg-red-500/10 rounded-lg text-sm transition"
-                  >
-                    Cancel Request
-                  </button>
-                )}
-
-                {/* Big Review Button for completed jobs */}
-                {canReview(job) && (
-                  <Link
-                    to={`/customer/review/${job._id}`}
-                    onClick={(e) => e.stopPropagation()}
-                    className="px-6 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition flex items-center"
-                  >
-                    <Star size={20} className="mr-2" fill="currentColor" />
-                    Rate & Review
-                  </Link>
-                )}
-
-                {/* Show Review if exists */}
-                {job.status === 'completed' && job.review && (
-                  <div className="mt-2 text-left bg-green-500/10 border border-green-500/20 p-3 rounded-xl w-full">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Your Review</span>
-                      <div className="flex text-yellow-400 text-sm">
-                        {Array(job.review.rating).fill(0).map((_, i) => <Star key={i} size={14} fill="currentColor" className="text-yellow-400" />)}
-                      </div>
-                    </div>
-                    <p className="text-gray-300 text-sm italic">"{job.review.comment}"</p>
-                  </div>
-                )}
-
-                {/* Show if cancelled */}
-                {job.status === 'cancelled' && (
-                  <div className="flex items-center text-red-400 text-sm">
-                    <X size={20} />
-                    Cancelled
-                  </div>
-                )}
               </div>
             </div>
           ))}
