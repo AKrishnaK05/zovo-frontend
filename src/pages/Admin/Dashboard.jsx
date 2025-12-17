@@ -10,6 +10,10 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
+import {
+  Users, ClipboardList, RefreshCcw, CheckCircle,
+  Home, Wrench, Hourglass
+} from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -44,8 +48,8 @@ const Dashboard = () => {
               <p className="text-3xl font-bold text-white mt-1">{stats?.users?.total || 0}</p>
               <p className="text-xs text-green-400 mt-1">+{stats?.users?.newThisWeek || 0} this week</p>
             </div>
-            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-xl">
-              👥
+            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white">
+              <Users size={24} />
             </div>
           </div>
         </div>
@@ -57,8 +61,8 @@ const Dashboard = () => {
               <p className="text-3xl font-bold text-white mt-1">{stats?.jobs?.total || 0}</p>
               <p className="text-xs text-green-400 mt-1">+{stats?.jobs?.newThisWeek || 0} this week</p>
             </div>
-            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xl">
-              📋
+            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white">
+              <ClipboardList size={24} />
             </div>
           </div>
         </div>
@@ -70,8 +74,8 @@ const Dashboard = () => {
               <p className="text-3xl font-bold text-white mt-1">{stats?.jobs?.active || 0}</p>
               <p className="text-xs text-yellow-400 mt-1">{stats?.jobs?.pending || 0} pending</p>
             </div>
-            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center text-xl">
-              🔄
+            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center text-white">
+              <RefreshCcw size={24} />
             </div>
           </div>
         </div>
@@ -83,8 +87,8 @@ const Dashboard = () => {
               <p className="text-3xl font-bold text-white mt-1">{stats?.jobs?.completed || 0}</p>
               <p className="text-xs text-green-400 mt-1">₹{stats?.revenue?.total || 0} revenue</p>
             </div>
-            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-xl">
-              ✅
+            <div className="h-12 w-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-white">
+              <CheckCircle size={24} />
             </div>
           </div>
         </div>
@@ -94,8 +98,8 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <Link to="/admin/users?role=customer" className="panel-card p-6 hover:bg-white/5 transition">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-full bg-purple-500/20 flex items-center justify-center text-2xl">
-              🏠
+            <div className="h-12 w-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+              <Home size={24} />
             </div>
             <div className="ml-4">
               <p className="text-2xl font-bold text-white">{stats?.users?.customers || 0}</p>
@@ -106,8 +110,8 @@ const Dashboard = () => {
 
         <Link to="/admin/users?role=worker" className="panel-card p-6 hover:bg-white/5 transition">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-full bg-cyan-500/20 flex items-center justify-center text-2xl">
-              🔧
+            <div className="h-12 w-12 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+              <Wrench size={24} />
             </div>
             <div className="ml-4">
               <p className="text-2xl font-bold text-white">{stats?.users?.workers || 0}</p>
@@ -118,8 +122,8 @@ const Dashboard = () => {
 
         <Link to="/admin/jobs?status=pending" className="panel-card p-6 hover:bg-white/5 transition">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-2xl">
-              ⏳
+            <div className="h-12 w-12 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
+              <Hourglass size={24} />
             </div>
             <div className="ml-4">
               <p className="text-2xl font-bold text-white">{stats?.jobs?.pending || 0}</p>

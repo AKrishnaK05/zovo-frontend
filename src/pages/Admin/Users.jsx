@@ -1,6 +1,7 @@
 // frontend/src/pages/Admin/Users.jsx
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
+import { Users as UsersIcon } from 'lucide-react';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -33,7 +34,7 @@ const Users = () => {
   const filteredUsers = users.filter(user => {
     const matchesFilter = filter === 'all' || user.role === filter;
     const matchesSearch = user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          user.email?.toLowerCase().includes(searchQuery.toLowerCase());
+      user.email?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
@@ -104,11 +105,10 @@ const Users = () => {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                filter === f
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-              }`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filter === f
+                ? 'bg-purple-500 text-white'
+                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
             >
               {f.charAt(0).toUpperCase() + f.slice(1)}
             </button>
@@ -126,7 +126,7 @@ const Users = () => {
       {/* Users List */}
       {filteredUsers.length === 0 ? (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">👥</div>
+          <div className="flex justify-center mb-4"><UsersIcon size={64} className="text-gray-600" /></div>
           <h3 className="text-xl font-semibold text-white mb-2">No Users Found</h3>
           <p className="text-gray-400">Try adjusting your filters</p>
         </div>
@@ -164,9 +164,8 @@ const Users = () => {
                   </td>
                   <td className="px-6 py-4 text-gray-400">{user.phone || '-'}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      user.isActive !== false ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                    }`}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${user.isActive !== false ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                      }`}>
                       {user.isActive !== false ? 'Active' : 'Inactive'}
                     </span>
                   </td>

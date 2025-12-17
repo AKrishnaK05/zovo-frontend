@@ -1,3 +1,5 @@
+import { Calendar, Clock, TrendingUp, MapPin, Check } from 'lucide-react';
+
 const PriceBreakdown = ({ pricing, loading }) => {
   if (loading) {
     return (
@@ -19,7 +21,7 @@ const PriceBreakdown = ({ pricing, loading }) => {
   return (
     <div className="panel-card p-6">
       <h3 className="text-lg font-semibold text-white mb-4">Price Breakdown</h3>
-      
+
       <div className="space-y-3">
         {/* Base Price */}
         <div className="flex justify-between text-gray-300">
@@ -39,10 +41,10 @@ const PriceBreakdown = ({ pricing, loading }) => {
         {breakdown.modifiers.map((mod, index) => (
           <div key={index} className="flex justify-between text-gray-400 text-sm">
             <span className="flex items-center">
-              {mod.type === 'weekend' && '📅'}
-              {mod.type === 'peak_hour' && '⏰'}
-              {mod.type === 'surge' && '📈'}
-              {mod.type === 'area' && '📍'}
+              {mod.type === 'weekend' && <Calendar size={14} className="mr-1" />}
+              {mod.type === 'peak_hour' && <Clock size={14} className="mr-1" />}
+              {mod.type === 'surge' && <TrendingUp size={14} className="mr-1" />}
+              {mod.type === 'area' && <MapPin size={14} className="mr-1" />}
               <span className="ml-1">{mod.name}</span>
             </span>
             <span className={mod.amount > 0 ? 'text-yellow-400' : 'text-green-400'}>
@@ -95,7 +97,7 @@ const PriceBreakdown = ({ pricing, loading }) => {
       {/* Price Guarantee */}
       <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
         <div className="flex items-center text-green-400 text-sm">
-          <span className="mr-2">✓</span>
+          <Check size={16} className="mr-2" />
           <span>Price locked at booking. No hidden charges.</span>
         </div>
       </div>

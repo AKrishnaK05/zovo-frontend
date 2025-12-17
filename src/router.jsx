@@ -16,7 +16,7 @@ import AdminLayout from '../layouts/AdminLayout';
 // Customer Pages
 import CustomerHome from '../pages/Customer/CustomerHome';
 import BookService from '../pages/Customer/BookService';
-import JobHistory from '../pages/Customer/JobHistory';  // ✅ ADDED
+import JobHistory from '../pages/Customer/JobHistory';  // ADDED
 
 // Worker Pages
 import WorkerHome from '../pages/Worker/WorkerHome';
@@ -34,7 +34,7 @@ import ServiceAreas from '../pages/Admin/ServiceAreas';
 import Reviews from '../pages/Admin/Reviews';
 
 // ==================== PLACEHOLDER COMPONENTS ====================
-// ✅ REMOVED CustomerHistory placeholder - now using actual import
+// REMOVED CustomerHistory placeholder - now using actual import
 
 const WorkerEarnings = () => (
   <div>
@@ -155,7 +155,7 @@ const router = createBrowserRouter([
       { index: true, element: <Navigate to="/customer/home" replace /> },
       { path: 'home', element: <CustomerHome /> },
       { path: 'book/:category', element: <BookService /> },
-      { path: 'history', element: <JobHistory /> },  // ✅ CHANGED FROM CustomerHistory
+      { path: 'history', element: <JobHistory /> },  // CHANGED FROM CustomerHistory
     ],
   },
 

@@ -3,6 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useJobs } from '../../context/JobContext';
 import api from '../../services/api';
+import {
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Package,
+  Search, MapPin, Navigation, Calendar, Clock, Check, Map
+} from 'lucide-react';
 
 const CreateJob = () => {
   const navigate = useNavigate();
@@ -39,13 +43,13 @@ const CreateJob = () => {
   const [loadingPrice, setLoadingPrice] = useState(false);
 
   const categories = [
-    { value: 'plumbing', label: 'Plumbing', icon: '🔧', basePrice: 499 },
-    { value: 'electrical', label: 'Electrical', icon: '⚡', basePrice: 599 },
-    { value: 'cleaning', label: 'Cleaning', icon: '🧹', basePrice: 399 },
-    { value: 'painting', label: 'Painting', icon: '🎨', basePrice: 199 },
-    { value: 'carpentry', label: 'Carpentry', icon: '🪚', basePrice: 698 },
-    { value: 'appliance', label: 'Appliance', icon: '🔌', basePrice: 599 },
-    { value: 'other', label: 'Other', icon: '📦', basePrice: 490 }
+    { value: 'plumbing', label: 'Plumbing', icon: <Wrench size={32} />, basePrice: 499 },
+    { value: 'electrical', label: 'Electrical', icon: <Zap size={32} />, basePrice: 599 },
+    { value: 'cleaning', label: 'Cleaning', icon: <SprayCan size={32} />, basePrice: 399 },
+    { value: 'painting', label: 'Painting', icon: <Paintbrush size={32} />, basePrice: 199 },
+    { value: 'carpentry', label: 'Carpentry', icon: <Hammer size={32} />, basePrice: 698 },
+    { value: 'appliance', label: 'Appliance', icon: <Plug size={32} />, basePrice: 599 },
+    { value: 'other', label: 'Other', icon: <Package size={32} />, basePrice: 490 }
   ];
 
   const defaultTimeSlots = [
@@ -359,7 +363,7 @@ const CreateJob = () => {
                   : 'bg-gray-800 text-gray-500'
                   } ${step.num < currentStep ? 'cursor-pointer hover:bg-purple-600' : ''}`}
               >
-                {currentStep > step.num ? '✓' : step.num}
+                {currentStep > step.num ? <Check size={16} /> : step.num}
               </button>
               <span className={`ml-3 hidden sm:block ${currentStep >= step.num ? 'text-white' : 'text-gray-500'
                 }`}>
@@ -410,7 +414,7 @@ const CreateJob = () => {
                         onChange={handleChange}
                         className="sr-only"
                       />
-                      <span className="text-3xl">{cat.icon}</span>
+                      <span className="text-purple-400">{cat.icon}</span>
                       <p className="text-sm font-medium text-gray-300 mt-2">{cat.label}</p>
                       <p className="text-xs text-purple-400 mt-1">From ₹{cat.basePrice}</p>
                     </label>
@@ -421,13 +425,13 @@ const CreateJob = () => {
               {/* Location Selection */}
               <div className="panel-card p-6">
                 <label className="block text-lg font-semibold text-white mb-4">
-                  📍 Service Location *
+                  <MapPin className="inline-block mr-2 text-purple-400" size={20} /> Service Location *
                 </label>
 
                 <div className="relative mb-4">
                   <div className="flex space-x-2">
                     <div className="relative flex-1">
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">🔍</div>
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"><Search size={18} /></div>
                       <input
                         type="text"
                         value={searchQuery}
@@ -450,7 +454,7 @@ const CreateJob = () => {
                     >
                       {isLocating ? (
                         <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
-                      ) : '📍'}
+                      ) : <Navigation size={20} />}
                     </button>
                   </div>
 
@@ -473,7 +477,7 @@ const CreateJob = () => {
                 {formData.address ? (
                   <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
                     <div className="flex items-start space-x-3">
-                      <span className="text-green-400 text-xl">✓</span>
+                      <span className="text-green-400"><CheckCircle size={24} /></span>
                       <div className="flex-1">
                         <p className="text-green-400 text-sm font-medium">Location Selected</p>
                         <p className="text-gray-300 text-sm mt-1">{formData.address}</p>
@@ -492,7 +496,7 @@ const CreateJob = () => {
                   </div>
                 ) : (
                   <div className="p-8 bg-gray-800/50 rounded-lg text-center">
-                    <div className="text-5xl mb-4 opacity-50">🗺️</div>
+                    <div className="flex justify-center mb-4"><Map size={48} className="text-gray-600" /></div>
                     <p className="text-gray-400">Search above or use current location</p>
                   </div>
                 )}
@@ -533,7 +537,7 @@ const CreateJob = () => {
           {currentStep === 2 && (
             <>
               <div className="panel-card p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">📅 Select Date</h3>
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center"><Calendar className="mr-2" size={20} /> Select Date</h3>
 
                 {loadingDates ? (
                   <div className="flex items-center justify-center h-32">
@@ -573,7 +577,7 @@ const CreateJob = () => {
 
               {formData.scheduledDate && (
                 <div className="panel-card p-6">
-                  <h3 className="text-lg font-semibold text-white mb-4">🕐 Select Time Slot</h3>
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center"><Clock className="mr-2" size={20} /> Select Time Slot</h3>
 
                   {loadingSlots ? (
                     <div className="flex items-center justify-center h-32">
@@ -615,11 +619,11 @@ const CreateJob = () => {
           {/* STEP 3: Review */}
           {currentStep === 3 && (
             <div className="panel-card p-6">
-              <h3 className="text-lg font-semibold text-white mb-6">📋 Booking Summary</h3>
+              <h3 className="text-lg font-semibold text-white mb-6 flex items-center"><ClipboardList className="mr-2" size={20} /> Booking Summary</h3>
 
               <div className="space-y-4">
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
-                  <span className="text-3xl">{categories.find(c => c.value === formData.category)?.icon}</span>
+                  <span className="text-purple-400">{categories.find(c => c.value === formData.category)?.icon}</span>
                   <div>
                     <h4 className="text-white font-medium">{categories.find(c => c.value === formData.category)?.label} Service</h4>
                     {formData.title && <p className="text-gray-400 text-sm">{formData.title}</p>}
@@ -627,7 +631,7 @@ const CreateJob = () => {
                 </div>
 
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
-                  <span className="text-3xl">📍</span>
+                  <MapPin className="text-gray-400" size={24} />
                   <div>
                     <h4 className="text-white font-medium">Location</h4>
                     <p className="text-gray-400 text-sm">{formData.address}</p>
@@ -635,7 +639,7 @@ const CreateJob = () => {
                 </div>
 
                 <div className="flex items-start space-x-4 p-4 bg-gray-800/50 rounded-lg">
-                  <span className="text-3xl">📅</span>
+                  <Calendar className="text-gray-400" size={24} />
                   <div>
                     <h4 className="text-white font-medium">Date & Time</h4>
                     <p className="text-gray-400 text-sm">

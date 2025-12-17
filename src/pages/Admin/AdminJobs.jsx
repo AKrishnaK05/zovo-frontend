@@ -1,6 +1,10 @@
 // frontend/src/pages/Admin/Jobs.jsx
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
+import {
+  ClipboardList, RefreshCcw, Trash2, Wrench, Zap, SprayCan,
+  Paintbrush, Hammer, Plug, Package, Snowflake
+} from 'lucide-react';
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -39,7 +43,7 @@ const Jobs = () => {
 
   const handleDelete = async (jobId) => {
     if (!window.confirm('Are you sure you want to delete this job?')) return;
-    
+
     try {
       await api.delete(`/jobs/${jobId}`);
       fetchJobs();
@@ -52,7 +56,7 @@ const Jobs = () => {
   // Filter jobs
   const filteredJobs = jobs.filter(job => {
     const matchesFilter = filter === 'all' || job.status === filter;
-    const matchesSearch = 
+    const matchesSearch =
       job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.customer?.name?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -72,16 +76,16 @@ const Jobs = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      plumbing: '🔧',
-      electrical: '⚡',
-      cleaning: '🧹',
-      painting: '🎨',
-      carpentry: '🪚',
-      appliance: '🔌',
-      'ac-service': '❄️',
-      other: '📦'
+      plumbing: <Wrench size={20} />,
+      electrical: <Zap size={20} />,
+      cleaning: <SprayCan size={20} />,
+      painting: <Paintbrush size={20} />,
+      carpentry: <Hammer size={20} />,
+      appliance: <Plug size={20} />,
+      'ac-service': <Snowflake size={20} />,
+      other: <Package size={20} />
     };
-    return icons[category] || '📦';
+    return icons[category] || <Package size={20} />;
   };
 
   const formatDate = (date) => {
@@ -116,7 +120,7 @@ const Jobs = () => {
           onClick={fetchJobs}
           className="btn-secondary flex items-center"
         >
-          <span className="mr-2">🔄</span>
+          <RefreshCcw size={16} className="mr-2" />
           Refresh
         </button>
       </div>
@@ -179,11 +183,10 @@ const Jobs = () => {
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                  filter === f
-                    ? 'bg-purple-500 text-white'
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                }`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filter === f
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
               >
                 {f.replace('_', ' ').charAt(0).toUpperCase() + f.replace('_', ' ').slice(1)}
               </button>
@@ -195,11 +198,11 @@ const Jobs = () => {
       {/* Jobs Table */}
       {filteredJobs.length === 0 ? (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">📋</div>
+          <div className="flex justify-center mb-4"><ClipboardList size={64} className="text-gray-600" /></div>
           <h3 className="text-xl font-semibold text-white mb-2">No Jobs Found</h3>
           <p className="text-gray-400">
-            {searchTerm || filter !== 'all' 
-              ? 'Try adjusting your filters or search term.' 
+            {searchTerm || filter !== 'all'
+              ? 'Try adjusting your filters or search term.'
               : 'No jobs have been created yet.'}
           </p>
         </div>
@@ -224,7 +227,7 @@ const Jobs = () => {
                     {/* Job Info */}
                     <td className="p-4">
                       <div className="flex items-center space-x-3">
-                        <span className="text-2xl">{getCategoryIcon(job.category)}</span>
+                        <span className="text-purple-400">{getCategoryIcon(job.category)}</span>
                         <div>
                           <p className="text-white font-medium">{job.title}</p>
                           <p className="text-gray-500 text-sm capitalize">{job.category}</p>
@@ -296,7 +299,7 @@ const Jobs = () => {
                           className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition"
                           title="Delete Job"
                         >
-                          🗑️
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </td>

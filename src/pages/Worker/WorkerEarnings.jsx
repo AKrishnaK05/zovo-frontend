@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
+import { IndianRupee, CheckCircle, Wallet, Banknote } from 'lucide-react';
 
 const WorkerEarnings = () => {
   const [loading, setLoading] = useState(true);
@@ -54,8 +55,9 @@ const WorkerEarnings = () => {
         <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-gray-400 font-medium">Total Earnings</h3>
+            <h3 className="text-gray-400 font-medium">Total Earnings</h3>
             <span className="p-2 bg-green-500/20 rounded-lg text-green-400">
-              💰
+              <IndianRupee size={24} />
             </span>
           </div>
           <p className="text-4xl font-bold text-white">
@@ -70,8 +72,9 @@ const WorkerEarnings = () => {
         <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-gray-400 font-medium">Completed Jobs</h3>
+            <h3 className="text-gray-400 font-medium">Completed Jobs</h3>
             <span className="p-2 bg-purple-500/20 rounded-lg text-purple-400">
-              ✅
+              <CheckCircle size={24} />
             </span>
           </div>
           <p className="text-4xl font-bold text-white">
@@ -92,7 +95,9 @@ const WorkerEarnings = () => {
 
         {earningsData.transactions.length === 0 ? (
           <div className="p-12 text-center text-gray-400">
-            <span className="text-4xl mb-4 block">💸</span>
+            <div className="flex justify-center mb-4">
+              <Wallet size={48} className="text-gray-600" />
+            </div>
             <p>No earnings yet. Complete jobs to start earning!</p>
           </div>
         ) : (

@@ -1,6 +1,10 @@
 // frontend/src/pages/Worker/MyJobs.jsx
 import { useEffect, useState } from 'react';
 import { useWorker } from '../../context/WorkerContext';
+import {
+  ClipboardList, Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Package,
+  MapPin, Navigation, Calendar, Clock, Tag, User, Phone, Play, CheckCircle, Check
+} from 'lucide-react';
 
 const MyJobs = () => {
   const { myJobs, loading, loadJobs, updateJobStatus } = useWorker();
@@ -36,15 +40,15 @@ const MyJobs = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      plumbing: '🔧',
-      electrical: '⚡',
-      cleaning: '🧹',
-      painting: '🎨',
-      carpentry: '🪚',
-      appliance: '🔌',
-      other: '📦'
+      plumbing: <Wrench size={20} />,
+      electrical: <Zap size={20} />,
+      cleaning: <SprayCan size={20} />,
+      painting: <Paintbrush size={20} />,
+      carpentry: <Hammer size={20} />,
+      appliance: <Plug size={20} />,
+      other: <Package size={20} />
     };
-    return icons[category] || '📦';
+    return icons[category] || <Package size={20} />;
   };
 
   const formatDate = (date) => {
@@ -120,11 +124,10 @@ const MyJobs = () => {
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap ${
-              filter === f
-                ? 'bg-purple-500 text-white'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-            }`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap ${filter === f
+              ? 'bg-purple-500 text-white'
+              : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              }`}
           >
             {f.replace('_', ' ').charAt(0).toUpperCase() + f.replace('_', ' ').slice(1)}
           </button>
@@ -134,7 +137,9 @@ const MyJobs = () => {
       {/* Jobs */}
       {filteredJobs.length === 0 ? (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">📋</div>
+          <div className="flex justify-center mb-4">
+            <ClipboardList size={64} className="text-gray-600" />
+          </div>
           <h3 className="text-xl font-semibold text-white">No Jobs Found</h3>
           <p className="text-gray-400 mt-2">Accept some jobs to see them here</p>
         </div>
@@ -146,7 +151,7 @@ const MyJobs = () => {
                 <div className="flex-1">
                   {/* Header */}
                   <div className="flex items-center space-x-3 mb-2">
-                    <span className="text-2xl">{getCategoryIcon(job.category)}</span>
+                    <span className="text-purple-400">{getCategoryIcon(job.category)}</span>
                     <h3 className="text-xl font-semibold text-white">{job.title}</h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadge(job.status)}`}>
                       {job.status.replace('_', ' ').toUpperCase()}
@@ -160,7 +165,7 @@ const MyJobs = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-3">
                         <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                          <span className="text-xl">📍</span>
+                          <MapPin className="text-blue-400" size={20} />
                         </div>
                         <div>
                           <p className="text-white font-medium">Service Location</p>
@@ -175,7 +180,7 @@ const MyJobs = () => {
                           onClick={() => openDirections(job.location?.address)}
                           className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm transition flex items-center"
                         >
-                          🧭 Directions
+                          <Navigation size={16} className="mr-2" /> Directions
                         </button>
                         <button
                           onClick={() => openInMaps(job.location?.address)}
@@ -189,9 +194,9 @@ const MyJobs = () => {
 
                   {/* Date & Time */}
                   <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                    <span>📅 {formatDate(job.scheduledDate)}</span>
-                    {job.timeSlot?.time && <span>🕐 {formatTime(job.timeSlot.time)}</span>}
-                    <span className="capitalize">🏷️ {job.category}</span>
+                    <span className="flex items-center gap-1"><Calendar size={14} /> {formatDate(job.scheduledDate)}</span>
+                    {job.timeSlot?.time && <span className="flex items-center gap-1"><Clock size={14} /> {formatTime(job.timeSlot.time)}</span>}
+                    <span className="capitalize flex items-center gap-1"><Tag size={14} /> {job.category}</span>
                   </div>
 
                   {/* Customer Info */}
@@ -211,7 +216,7 @@ const MyJobs = () => {
                           href={`tel:${job.customer.phone}`}
                           className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm transition flex items-center"
                         >
-                          📞 Call
+                          <Phone size={14} className="mr-2" /> Call
                         </a>
                       )}
                     </div>
@@ -223,29 +228,29 @@ const MyJobs = () => {
                   {job.estimatedPrice > 0 && (
                     <p className="text-2xl font-bold gradient-text">₹{job.estimatedPrice}</p>
                   )}
-                  
+
                   {job.status === 'accepted' && (
                     <button
                       onClick={() => handleStatusUpdate(job._id, 'in_progress')}
                       disabled={updatingId === job._id}
-                      className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-medium rounded-lg text-sm transition"
+                      className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-medium rounded-lg text-sm transition flex items-center"
                     >
-                      {updatingId === job._id ? '...' : '▶️ Start Work'}
+                      {updatingId === job._id ? '...' : <><Play size={16} className="mr-2" /> Start Work</>}
                     </button>
                   )}
-                  
+
                   {job.status === 'in_progress' && (
                     <button
                       onClick={() => handleStatusUpdate(job._id, 'completed')}
                       disabled={updatingId === job._id}
-                      className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg text-sm transition"
+                      className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg text-sm transition flex items-center"
                     >
-                      {updatingId === job._id ? '...' : '✅ Complete'}
+                      {updatingId === job._id ? '...' : <><CheckCircle size={16} className="mr-2" /> Complete</>}
                     </button>
                   )}
-                  
+
                   {job.status === 'completed' && (
-                    <span className="text-green-400 text-sm font-medium">✓ Completed</span>
+                    <span className="text-green-400 text-sm font-medium flex items-center"><Check size={16} className="mr-1" /> Completed</span>
                   )}
                 </div>
               </div>

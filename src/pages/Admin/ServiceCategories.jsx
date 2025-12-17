@@ -1,6 +1,35 @@
 // frontend/src/pages/Admin/ServiceCategories.jsx
 import { useState, useEffect, useCallback } from 'react';
-import api from '../../services/api';
+import {
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Home,
+  Droplets, Lightbulb, Box, Snowflake, Truck, Scissors,
+  ClipboardList, Edit3, Trash2
+} from 'lucide-react';
+
+// Helper to map string names/emojis to Lucide components
+const getCategoryIcon = (iconName, size = 24) => {
+  const map = {
+    'plumbing': Wrench, 'wrench': Wrench, '🔧': Wrench,
+    'electrical': Zap, 'zap': Zap, '⚡': Zap,
+    'cleaning': SprayCan, 'spray-can': SprayCan, '🧹': SprayCan,
+    'painting': Paintbrush, 'paintbrush': Paintbrush, '🎨': Paintbrush,
+    'carpentry': Hammer, 'hammer': Hammer, '🪚': Hammer,
+    'appliance': Plug, 'plug': Plug, '🔌': Plug,
+    'home': Home, '🏠': Home,
+    'water': Droplets, '🚿': Droplets,
+    'light': Lightbulb, '💡': Lightbulb,
+    'other': Box, 'box': Box, '📦': Box, '🛠️': Wrench,
+    'ac': Snowflake, 'snowflake': Snowflake, '❄️': Snowflake,
+    'pest': Box, '🦟': Box,
+    'truck': Truck, '🚚': Truck,
+    'beauty': Scissors, 'scissors': Scissors, '💇‍♀️': Scissors, '💇‍♂️': Scissors
+  };
+
+  const Icon = map[iconName?.toLowerCase()] || Box;
+  // If we have an exact match for a Lucide component name in the future, we could handle it via dynamic lookup, 
+  // but for now, this map covers the existing emoji set + new logical names.
+  return <Icon size={size} />;
+};
 
 const ServiceCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -11,7 +40,7 @@ const ServiceCategories = () => {
     name: '',
     slug: '',
     description: '',
-    icon: '🔧',
+    icon: 'plumbing',
     basePrice: 0,
     hourlyRate: 0,
     minDuration: 60,
@@ -21,7 +50,12 @@ const ServiceCategories = () => {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  const iconOptions = ['🔧', '⚡', '🧹', '🎨', '🪚', '🔌', '🏠', '🚿', '💡', '🛠️', '📦', '❄️', '🦟', '💇‍♀️', '💇‍♂️', '🚚'];
+  // Revised options using string keys that our helper maps to Icons
+  const iconOptions = [
+    'plumbing', 'electrical', 'cleaning', 'painting',
+    'carpentry', 'appliance', 'home', 'water',
+    'light', 'box', 'ac', 'truck', 'beauty'
+  ];
 
   useEffect(() => {
     fetchCategories();
@@ -43,7 +77,7 @@ const ServiceCategories = () => {
       name: '',
       slug: '',
       description: '',
-      icon: '🔧',
+      icon: 'plumbing',
       basePrice: 0,
       hourlyRate: 0,
       minDuration: 60,
@@ -58,7 +92,7 @@ const ServiceCategories = () => {
       name: category.name || '',
       slug: category.slug || '',
       description: category.description || '',
-      icon: category.icon || '🔧',
+      icon: category.icon || 'plumbing',
       basePrice: category.basePrice || 0,
       hourlyRate: category.hourlyRate || 0,
       minDuration: category.minDuration || 60,
@@ -194,11 +228,10 @@ const ServiceCategories = () => {
 
       {/* Message */}
       {message.text && (
-        <div className={`mb-6 p-4 rounded-lg flex items-center justify-between ${
-          message.type === 'success'
-            ? 'bg-green-500/10 border border-green-500/20 text-green-400'
-            : 'bg-red-500/10 border border-red-500/20 text-red-400'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg flex items-center justify-between ${message.type === 'success'
+          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+          : 'bg-red-500/10 border border-red-500/20 text-red-400'
+          }`}>
           <span>{message.text}</span>
           <button onClick={() => setMessage({ type: '', text: '' })} className="ml-4 hover:opacity-70">✕</button>
         </div>
@@ -210,7 +243,7 @@ const ServiceCategories = () => {
           <div key={category._id} className="panel-card p-6">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <span className="text-4xl">{category.icon}</span>
+                <span className="text-purple-400">{getCategoryIcon(category.icon, 32)}</span>
                 <div>
                   <h3 className="text-xl font-bold text-white">{category.name}</h3>
                   <p className="text-gray-500 text-sm">{category.slug}</p>
@@ -270,7 +303,7 @@ const ServiceCategories = () => {
       {/* Empty State */}
       {categories.length === 0 && (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">📋</div>
+          <div className="flex justify-center mb-4"><ClipboardList size={64} className="text-gray-600" /></div>
           <h3 className="text-xl font-semibold text-white mb-2">No Categories Yet</h3>
           <p className="text-gray-400 mb-6">Create your first service category to get started.</p>
           <button onClick={handleCreate} className="btn-accent">
@@ -281,23 +314,23 @@ const ServiceCategories = () => {
 
       {/* Modal - Rendered only once with portal-like behavior */}
       {showModal && (
-        <div 
+        <div
           className="fixed inset-0 z-[9999] overflow-y-auto"
-          aria-labelledby="modal-title" 
-          role="dialog" 
+          aria-labelledby="modal-title"
+          role="dialog"
           aria-modal="true"
         >
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
             onClick={handleCloseModal}
             aria-hidden="true"
           />
-          
+
           {/* Modal Container */}
           <div className="flex min-h-full items-center justify-center p-4">
             {/* Modal Content */}
-            <div 
+            <div
               className="relative bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -306,8 +339,8 @@ const ServiceCategories = () => {
                 <h2 id="modal-title" className="text-2xl font-bold text-white">
                   {editingCategory ? 'Edit Category' : 'Create Category'}
                 </h2>
-                <button 
-                  onClick={handleCloseModal} 
+                <button
+                  onClick={handleCloseModal}
                   className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition"
                   type="button"
                 >
@@ -352,13 +385,13 @@ const ServiceCategories = () => {
                         key={icon}
                         type="button"
                         onClick={() => handleInputChange('icon', icon)}
-                        className={`p-2 rounded-lg text-2xl transition ${
-                          formData.icon === icon
-                            ? 'bg-purple-500 ring-2 ring-purple-400 scale-110'
-                            : 'bg-gray-700 hover:bg-gray-600'
-                        }`}
+                        className={`p-3 rounded-lg transition border flex items-center justify-center ${formData.icon === icon
+                            ? 'bg-purple-500/20 border-purple-500 text-purple-400'
+                            : 'bg-gray-700 border-gray-600 text-gray-400 hover:bg-gray-600'
+                          }`}
+                        title={icon}
                       >
-                        {icon}
+                        {getCategoryIcon(icon, 24)}
                       </button>
                     ))}
                   </div>
@@ -417,9 +450,9 @@ const ServiceCategories = () => {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <label className="block text-sm font-medium text-gray-300">Service Includes</label>
-                    <button 
-                      type="button" 
-                      onClick={addInclude} 
+                    <button
+                      type="button"
+                      onClick={addInclude}
                       className="text-purple-400 text-sm hover:text-purple-300 transition"
                     >
                       + Add Item
@@ -454,9 +487,9 @@ const ServiceCategories = () => {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <label className="block text-sm font-medium text-gray-300">Sub-services</label>
-                    <button 
-                      type="button" 
-                      onClick={addSubService} 
+                    <button
+                      type="button"
+                      onClick={addSubService}
                       className="text-purple-400 text-sm hover:text-purple-300 transition"
                     >
                       + Add Sub-service

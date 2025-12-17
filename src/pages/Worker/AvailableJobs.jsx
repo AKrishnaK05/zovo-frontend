@@ -1,6 +1,11 @@
 // frontend/src/pages/Worker/AvailableJobs.jsx
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import {
+  MapPin, Calendar, Clock, User, Phone, Check,
+  Wrench, Zap, SprayCan, Paintbrush, Hammer, Plug, Package,
+  Inbox, Loader2
+} from 'lucide-react';
 import { useWorker } from '../../context/WorkerContext';
 
 const AvailableJobs = () => {
@@ -86,15 +91,15 @@ const AvailableJobs = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      plumbing: '🔧',
-      electrical: '⚡',
-      cleaning: '🧹',
-      painting: '🎨',
-      carpentry: '🪚',
-      appliance: '🔌',
-      other: '📦'
+      plumbing: <Wrench size={20} />,
+      electrical: <Zap size={20} />,
+      cleaning: <SprayCan size={20} />,
+      painting: <Paintbrush size={20} />,
+      carpentry: <Hammer size={20} />,
+      appliance: <Plug size={20} />,
+      other: <Package size={20} />
     };
-    return icons[category] || '📦';
+    return icons[category] || <Package size={20} />;
   };
 
   const openInMaps = (address) => {
@@ -137,7 +142,9 @@ const AvailableJobs = () => {
         </div>
       ) : availableJobs.length === 0 ? (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">📭</div>
+          <div className="flex justify-center mb-4">
+            <Inbox size={64} className="text-gray-600" />
+          </div>
           <h3 className="text-xl font-medium text-white">No jobs available</h3>
           <p className="text-gray-400 mt-2">Check back later or update your service categories</p>
         </div>
@@ -149,7 +156,7 @@ const AvailableJobs = () => {
                 <div className="flex-1">
                   {/* Title & Category */}
                   <div className="flex items-center space-x-3 mb-2">
-                    <span className="text-3xl">{getCategoryIcon(job.category)}</span>
+                    <span className="text-purple-400">{getCategoryIcon(job.category)}</span>
                     <div>
                       <h3 className="text-xl font-semibold text-white">{job.title}</h3>
                       <span className="text-sm text-purple-400 capitalize">{job.category}</span>
@@ -163,7 +170,7 @@ const AvailableJobs = () => {
                   <div className="p-4 bg-gray-800/50 rounded-lg mb-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-3">
-                        <span className="text-2xl">📍</span>
+                        <MapPin className="text-blue-400 mt-1" size={20} />
                         <div>
                           <p className="text-white font-medium">Service Location</p>
                           <p className="text-gray-400 text-sm mt-1">{job.location?.address || 'Address not provided'}</p>
@@ -187,17 +194,17 @@ const AvailableJobs = () => {
                   {/* Date, Time & Customer Info */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="flex items-center text-gray-400">
-                      <span className="mr-2">📅</span>
+                      <Calendar className="mr-2 text-purple-400" size={16} />
                       <span>{formatDate(job.scheduledDate)}</span>
                     </div>
                     {job.timeSlot?.time && (
                       <div className="flex items-center text-gray-400">
-                        <span className="mr-2">🕐</span>
+                        <Clock className="mr-2 text-purple-400" size={16} />
                         <span>{formatTime(job.timeSlot.time)}</span>
                       </div>
                     )}
                     <div className="flex items-center text-gray-400">
-                      <span className="mr-2">👤</span>
+                      <User className="mr-2 text-purple-400" size={16} />
                       <span>{job.customer?.name || 'Customer'}</span>
                     </div>
                   </div>
@@ -206,7 +213,7 @@ const AvailableJobs = () => {
                   {job.customer?.phone && (
                     <div className="mt-4 p-3 bg-cyan-500/10 rounded-lg flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <span>📞</span>
+                        <Phone size={16} className="text-cyan-400" />
                         <span className="text-cyan-400">{job.customer.phone}</span>
                       </div>
                       <a
@@ -239,7 +246,7 @@ const AvailableJobs = () => {
                       </>
                     ) : (
                       <>
-                        <span className="mr-2">✓</span>
+                        <Check size={18} className="mr-2" />
                         Accept Job
                       </>
                     )}

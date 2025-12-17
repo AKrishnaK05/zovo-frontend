@@ -1,6 +1,9 @@
 // frontend/src/pages/Admin/PricingRules.jsx
 import { useState, useEffect, useCallback } from 'react';
-import api from '../../services/api';
+import {
+  Plus, Edit3, Trash2, Check, X, Coins, Clock, Calendar,
+  AlertCircle, DollarSign, Percent
+} from 'lucide-react';
 
 const PricingRules = () => {
   const [rules, setRules] = useState([]);
@@ -163,7 +166,7 @@ const PricingRules = () => {
 
   const formatRuleValue = (rule) => {
     switch (rule.ruleType) {
-      case 'multiplier': 
+      case 'multiplier':
         const change = ((rule.value - 1) * 100).toFixed(0);
         return `×${rule.value} (${change >= 0 ? '+' : ''}${change}%)`;
       case 'fixed_add': return `+₹${rule.value}`;
@@ -195,11 +198,10 @@ const PricingRules = () => {
 
       {/* Message */}
       {message.text && (
-        <div className={`mb-6 p-4 rounded-lg flex items-center justify-between ${
-          message.type === 'success'
-            ? 'bg-green-500/10 border border-green-500/20 text-green-400'
-            : 'bg-red-500/10 border border-red-500/20 text-red-400'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg flex items-center justify-between ${message.type === 'success'
+          ? 'bg-green-500/10 border border-green-500/20 text-green-400'
+          : 'bg-red-500/10 border border-red-500/20 text-red-400'
+          }`}>
           <span>{message.text}</span>
           <button onClick={() => setMessage({ type: '', text: '' })} className="ml-4 hover:opacity-70">✕</button>
         </div>
@@ -213,11 +215,10 @@ const PricingRules = () => {
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-2">
                   <h3 className="text-xl font-semibold text-white">{rule.name}</h3>
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${
-                    rule.isActive
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-gray-500/20 text-gray-400'
-                  }`}>
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${rule.isActive
+                    ? 'bg-green-500/20 text-green-400'
+                    : 'bg-gray-500/20 text-gray-400'
+                    }`}>
                     {rule.isActive ? 'Active' : 'Inactive'}
                   </span>
                   <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">
@@ -268,24 +269,23 @@ const PricingRules = () => {
               <div className="flex space-x-2 ml-4">
                 <button
                   onClick={() => toggleRuleActive(rule)}
-                  className={`p-2 rounded-lg transition ${
-                    rule.isActive ? 'bg-green-500/10 text-green-400' : 'bg-gray-700 text-gray-400'
-                  }`}
+                  className={`p-2 rounded-lg transition ${rule.isActive ? 'bg-green-500/10 text-green-400' : 'bg-gray-700 text-gray-400'
+                    }`}
                   title={rule.isActive ? 'Deactivate' : 'Activate'}
                 >
-                  {rule.isActive ? '✓' : '○'}
+                  {rule.isActive ? <Check size={16} /> : <X size={16} />}
                 </button>
                 <button
                   onClick={() => handleEdit(rule)}
                   className="p-2 bg-gray-700 text-gray-300 hover:bg-gray-600 rounded-lg transition"
                 >
-                  ✏️
+                  <Edit3 size={16} />
                 </button>
                 <button
                   onClick={() => handleDelete(rule._id)}
                   className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg transition"
                 >
-                  🗑️
+                  <Trash2 size={16} />
                 </button>
               </div>
             </div>
@@ -296,7 +296,7 @@ const PricingRules = () => {
       {/* Empty State */}
       {rules.length === 0 && (
         <div className="panel-card p-12 text-center">
-          <div className="text-6xl mb-4">💰</div>
+          <div className="flex justify-center mb-4"><Coins size={64} className="text-gray-600" /></div>
           <h3 className="text-xl font-semibold text-white mb-2">No Pricing Rules</h3>
           <p className="text-gray-400 mb-6">Create pricing rules to adjust prices based on conditions.</p>
           <button onClick={handleCreate} className="btn-accent">
@@ -307,22 +307,22 @@ const PricingRules = () => {
 
       {/* Modal */}
       {showModal && (
-        <div 
+        <div
           className="fixed inset-0 z-[9999] overflow-y-auto"
-          aria-labelledby="modal-title" 
-          role="dialog" 
+          aria-labelledby="modal-title"
+          role="dialog"
           aria-modal="true"
         >
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/70 backdrop-blur-sm"
             onClick={handleCloseModal}
           />
-          
+
           {/* Modal Container */}
           <div className="flex min-h-full items-center justify-center p-4">
             {/* Modal Content */}
-            <div 
+            <div
               className="relative bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -331,8 +331,8 @@ const PricingRules = () => {
                 <h2 id="modal-title" className="text-2xl font-bold text-white">
                   {editingRule ? 'Edit Pricing Rule' : 'Create Pricing Rule'}
                 </h2>
-                <button 
-                  onClick={handleCloseModal} 
+                <button
+                  onClick={handleCloseModal}
                   className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-gray-800 transition"
                   type="button"
                 >
@@ -422,11 +422,10 @@ const PricingRules = () => {
                         key={day}
                         type="button"
                         onClick={() => toggleDay(index)}
-                        className={`px-3 py-2 rounded-lg text-sm transition ${
-                          formData.conditions.daysOfWeek.includes(index)
-                            ? 'bg-purple-500 text-white'
-                            : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                        }`}
+                        className={`px-3 py-2 rounded-lg text-sm transition ${formData.conditions.daysOfWeek.includes(index)
+                          ? 'bg-purple-500 text-white'
+                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                          }`}
                       >
                         {day.slice(0, 3)}
                       </button>
@@ -476,11 +475,10 @@ const PricingRules = () => {
                         key={cat}
                         type="button"
                         onClick={() => toggleCategory(cat)}
-                        className={`px-3 py-2 rounded-lg text-sm capitalize transition ${
-                          formData.categories.includes(cat)
-                            ? 'bg-purple-500 text-white'
-                            : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                        }`}
+                        className={`px-3 py-2 rounded-lg text-sm capitalize transition ${formData.categories.includes(cat)
+                          ? 'bg-purple-500 text-white'
+                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                          }`}
                       >
                         {cat.replace('-', ' ')}
                       </button>
@@ -494,13 +492,11 @@ const PricingRules = () => {
                   <button
                     type="button"
                     onClick={() => handleInputChange('isActive', !formData.isActive)}
-                    className={`w-12 h-6 rounded-full transition relative ${
-                      formData.isActive ? 'bg-green-500' : 'bg-gray-600'
-                    }`}
+                    className={`w-12 h-6 rounded-full transition relative ${formData.isActive ? 'bg-green-500' : 'bg-gray-600'
+                      }`}
                   >
-                    <div className={`w-5 h-5 rounded-full bg-white absolute top-0.5 transition-transform ${
-                      formData.isActive ? 'translate-x-6' : 'translate-x-0.5'
-                    }`} />
+                    <div className={`w-5 h-5 rounded-full bg-white absolute top-0.5 transition-transform ${formData.isActive ? 'translate-x-6' : 'translate-x-0.5'
+                      }`} />
                   </button>
                   <span className="text-gray-300">Rule is {formData.isActive ? 'active' : 'inactive'}</span>
                 </div>

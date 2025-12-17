@@ -8,10 +8,10 @@ export const getSocket = () => {
   const socketUrl = import.meta.env.VITE_SOCKET_URL;
 
   if (!socketUrl) {
-    throw new Error("❌ VITE_SOCKET_URL is not defined");
+    throw new Error("[ERROR] VITE_SOCKET_URL is not defined");
   }
 
-  console.log("🔌 Connecting to Socket.IO at:", socketUrl);
+  console.log("[INFO] Connecting to Socket.IO at:", socketUrl);
 
   const socket = io(socketUrl, {
     transports: ["websocket"],
@@ -20,11 +20,11 @@ export const getSocket = () => {
   });
 
   socket.on("connect", () => {
-    console.log("✅ Socket connected:", socket.id);
+    console.log("[SUCCESS] Socket connected:", socket.id);
   });
 
   socket.on("connect_error", (err) => {
-    console.error("❌ Socket connection error:", err.message);
+    console.error("[ERROR] Socket connection error:", err.message);
   });
 
   return socket;
