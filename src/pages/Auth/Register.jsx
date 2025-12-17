@@ -260,33 +260,47 @@ const Register = () => {
               <div className="mb-2 text-center">
                 <img src={logo} alt="Zovo" className="h-[550px] mx-auto -my-52 object-contain" />
               </div>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, role: 'customer', serviceCategories: [] })}
-                className={`w - full p - 4 rounded - xl border - 2 transition text - center mb - 4 ${formData.role === 'customer'
-                    ? 'border-zovo-blue bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300 bg-gray-50'
-                  } `}
-              >
-                <div className="mb-2 text-cyan-400">
-                  <User size={32} />
-                </div>
-                <h3 className="text-gray-900 font-semibold text-sm">Customer</h3>
-              </button>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, role: 'customer', serviceCategories: [] })}
+                  className={`relative p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center group ${formData.role === 'customer'
+                    ? 'border-blue-500 bg-blue-500/10 shadow-lg shadow-blue-500/20 scale-105'
+                    : 'border-gray-200/50 hover:border-blue-300 bg-white/40 hover:bg-blue-50/50'
+                    }`}
+                >
+                  <div className={`mb-3 p-3 rounded-full transition-all duration-300 ${formData.role === 'customer' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-400 group-hover:bg-blue-100 group-hover:text-blue-500'
+                    }`}>
+                    <User size={32} />
+                  </div>
+                  <h3 className={`font-bold text-lg ${formData.role === 'customer' ? 'text-blue-600' : 'text-gray-600'}`}>Customer</h3>
+                  <div className={`absolute top-3 right-3 transition-opacity duration-300 ${formData.role === 'customer' ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="bg-blue-500 text-white rounded-full p-1">
+                      <Check size={12} strokeWidth={4} />
+                    </div>
+                  </div>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, role: 'worker' })}
-                className={`w - full p - 4 rounded - xl border - 2 transition text - center ${formData.role === 'worker'
-                    ? 'border-zovo-blue bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300 bg-gray-50'
-                  } `}
-              >
-                <div className="mb-2 text-purple-400">
-                  <Wrench size={32} />
-                </div>
-                <h3 className="text-gray-900 font-semibold text-sm">Provider</h3>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, role: 'worker' })}
+                  className={`relative p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center group ${formData.role === 'worker'
+                    ? 'border-purple-500 bg-purple-500/10 shadow-lg shadow-purple-500/20 scale-105'
+                    : 'border-gray-200/50 hover:border-purple-300 bg-white/40 hover:bg-purple-50/50'
+                    }`}
+                >
+                  <div className={`mb-3 p-3 rounded-full transition-all duration-300 ${formData.role === 'worker' ? 'bg-purple-500 text-white' : 'bg-gray-100 text-gray-400 group-hover:bg-purple-100 group-hover:text-purple-500'
+                    }`}>
+                    <Wrench size={32} />
+                  </div>
+                  <h3 className={`font-bold text-lg ${formData.role === 'worker' ? 'text-purple-600' : 'text-gray-600'}`}>Provider</h3>
+                  <div className={`absolute top-3 right-3 transition-opacity duration-300 ${formData.role === 'worker' ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className="bg-purple-500 text-white rounded-full p-1">
+                      <Check size={12} strokeWidth={4} />
+                    </div>
+                  </div>
+                </button>
+              </div>
 
               {/* Google Signup Button */}
               <div className="mb-6 mt-6">
@@ -300,9 +314,9 @@ const Register = () => {
                 </button>
               </div>
 
-              <div className="relative flex py-2 items-center mb-4">
+              <div className="relative flex py-2 items-center mb-6">
                 <div className="flex-grow border-t border-gray-200"></div>
-                <span className="flex-shrink-0 mx-4 text-gray-500 text-sm">Or continue with email</span>
+                <span className="flex-shrink-0 mx-4 text-gray-400 text-xs uppercase tracking-wider font-medium">Or continue with email</span>
                 <div className="flex-grow border-t border-gray-200"></div>
               </div>
 
@@ -315,7 +329,7 @@ const Register = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
                     placeholder="e.g. Alex Smith"
                     required
                   />
@@ -331,7 +345,7 @@ const Register = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w - full px - 4 py - 3 bg - white border border - gray - 300 rounded - xl text - gray - 900 placeholder - gray - 400 focus: outline - none focus: border - zovo - blue focus: ring - 1 focus: ring - zovo - blue transition ${googleData ? 'cursor-not-allowed opacity-70' : ''} `}
+                    className={`w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition disabled:bg-gray-50 disabled:text-gray-500 ${googleData ? 'cursor-not-allowed opacity-70' : ''}`}
                     placeholder="Email Address"
                     required
                     disabled={!!googleData}
@@ -348,7 +362,7 @@ const Register = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
                     placeholder="Enter your phone number"
                   />
                 </div>
@@ -365,7 +379,7 @@ const Register = () => {
                     onChange={handleChange}
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
-                    className="w-full pl-4 pr-12 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition"
+                    className="w-full pl-4 pr-12 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
                     placeholder="Enter your password"
                     required
                   />
@@ -391,7 +405,7 @@ const Register = () => {
                     onChange={handleChange}
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
                     placeholder="Confirm your password"
                     required
                   />
@@ -406,7 +420,7 @@ const Register = () => {
                     name="securityQuestion"
                     value={formData.securityQuestion}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition appearance-none"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition appearance-none"
                     required
                   >
                     <option value="" disabled>Select a question</option>
@@ -429,7 +443,7 @@ const Register = () => {
                     name="securityAnswer"
                     value={formData.securityAnswer}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-zovo-blue focus:ring-1 focus:ring-zovo-blue transition"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
                     placeholder="Enter your answer"
                     required
                   />
@@ -466,8 +480,8 @@ const Register = () => {
                     type="button"
                     onClick={() => toggleCategory(cat.value)}
                     className={`p - 3 rounded - xl border - 2 transition text - center ${formData.serviceCategories.includes(cat.value)
-                        ? 'border-zovo-blue bg-blue-50 scale-105'
-                        : 'border-gray-200 hover:border-gray-300 bg-gray-50'
+                      ? 'border-zovo-blue bg-blue-50 scale-105'
+                      : 'border-gray-200 hover:border-gray-300 bg-gray-50'
                       } `}
                   >
                     <div className="text-2xl mb-1">{cat.icon}</div>

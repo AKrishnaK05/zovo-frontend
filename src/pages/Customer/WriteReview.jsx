@@ -88,12 +88,12 @@ const WriteReview = () => {
 
   if (success) {
     return (
-      <div className="max-w-lg mx-auto text-center py-12">
-        <div className="mb-4 text-yellow-400">
-          <PartyPopper size={64} />
+      <div className="max-w-lg mx-auto min-h-[60vh] flex flex-col items-center justify-center text-center py-12">
+        <div className="mb-6 text-yellow-500 animate-bounce">
+          <PartyPopper size={80} />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Thank You!</h2>
-        <p className="text-gray-400 mb-6">Your review has been submitted successfully.</p>
+        <h2 className="text-3xl font-bold text-white mb-2">Thank You!</h2>
+        <p className="text-gray-400 mb-8">Your review has been submitted successfully.</p>
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500 mx-auto"></div>
         <p className="text-gray-500 text-sm mt-4">Redirecting...</p>
       </div>
